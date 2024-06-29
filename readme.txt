@@ -155,6 +155,7 @@ That's it. You're done!
 * IMPROVE: Run counter when it visible on the screen in the counter block.
 * IMPROVE: Image width in image slider.
 * NEW: Spacing between counter and label in counter block.
+* NEW: Top, Right, Bottom, and Left position for the text in star rating block.
 
 = 3.2.0 =
 

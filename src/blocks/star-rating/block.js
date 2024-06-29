@@ -53,7 +53,7 @@ function StarRating(props) {
 	const [highlightedStars, setHighlightedStars] = useState(0);
 	const {
 		isSelected,
-		attributes: { starColor, blockID },
+		attributes: { starColor, blockID, textPosition, starAlign },
 		setAttributes,
 	} = props;
 	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
@@ -87,11 +87,16 @@ function StarRating(props) {
 	}, [block.clientId]);
 	const blockProps = useBlockProps();
 	const styles = getStyles(props.attributes);
+	const alignClass =
+		starAlign !== "" ? ` ub-star-rating-align-${starAlign}` : "";
 	return (
 		<div {...blockProps}>
 			{isSelected && blockControls(props)}
 			{isSelected && inspectorControls(props)}
-			<div className="ub-star-rating" style={styles}>
+			<div
+				className={`ub-star-rating ub-star-rating-text-${textPosition}${alignClass}`}
+				style={styles}
+			>
 				{editorDisplay({ ...props, highlightedStars, setHighlightedStars })}
 			</div>
 		</div>

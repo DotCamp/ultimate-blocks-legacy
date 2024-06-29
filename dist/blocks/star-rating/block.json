@@ -23,6 +23,10 @@
       "type": "string",
       "default": ""
     },
+    "textPosition": {
+      "type": "string",
+      "default": "bottom"
+    },
     "starSize": {
       "type": "number",
       "default": 20

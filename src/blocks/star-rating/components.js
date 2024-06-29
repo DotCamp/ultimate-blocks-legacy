@@ -1,6 +1,10 @@
 import { Star } from "./icons";
 
-import { CustomFontSizePicker, SpacingControl } from "../components";
+import {
+	CustomFontSizePicker,
+	CustomToggleGroupControl,
+	SpacingControl,
+} from "../components";
 import { __ } from "@wordpress/i18n";
 import {
 	InspectorControls,
@@ -19,32 +23,35 @@ import {
 export const blockControls = (props) => {
 	const { attributes, setAttributes } = props;
 
-	const { reviewTextAlign } = attributes;
+	const { reviewTextAlign, starAlign, textPosition } = attributes;
 	return (
 		<BlockControls>
 			<ToolbarGroup>
 				{["left", "center", "right"].map((a) => (
 					<ToolbarButton
 						icon={`align-${a}`}
+						isActive={starAlign === a}
 						label={__(`Align stars ${a}`)}
 						onClick={() => setAttributes({ starAlign: a })}
 					/>
 				))}
 			</ToolbarGroup>
-			<ToolbarGroup>
-				{["left", "center", "right", "justify"].map((a) => (
-					<ToolbarButton
-						icon={`editor-${a === "justify" ? a : "align" + a}`}
-						label={__(
-							(a !== "justify" ? "Align " : "") +
-								a[0].toUpperCase() +
-								a.slice(1),
-						)}
-						isActive={reviewTextAlign === a}
-						onClick={() => setAttributes({ reviewTextAlign: a })}
-					/>
-				))}
-			</ToolbarGroup>
+			{(textPosition === "top" || textPosition === "bottom") && (
+				<ToolbarGroup>
+					{["left", "center", "right", "justify"].map((a) => (
+						<ToolbarButton
+							icon={`editor-${a === "justify" ? a : "align" + a}`}
+							label={__(
+								(a !== "justify" ? "Align " : "") +
+									a[0].toUpperCase() +
+									a.slice(1),
+							)}
+							isActive={reviewTextAlign === a}
+							onClick={() => setAttributes({ reviewTextAlign: a })}
+						/>
+					))}
+				</ToolbarGroup>
+			)}
 		</BlockControls>
 	);
 };
@@ -64,6 +71,17 @@ export const inspectorControls = (props) => {
 		<>
 			<InspectorControls group="settings">
 				<PanelBody title={__("General")} initialOpen={true}>
+					<CustomToggleGroupControl
+						label={__("Text Position", "ultimate-blocks")}
+						attributeKey="textPosition"
+						isBlock
+						options={[
+							{ label: __("Top", "ultimate-blocks"), value: "top" },
+							{ label: __("Right", "ultimate-blocks"), value: "right" },
+							{ label: __("Bottom", "ultimate-blocks"), value: "bottom" },
+							{ label: __("Left", "ultimate-blocks"), value: "left" },
+						]}
+					/>
 					<RangeControl
 						label={__("Number of stars")}
 						value={starCount}

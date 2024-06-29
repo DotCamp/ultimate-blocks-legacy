@@ -2365,6 +2365,10 @@ $defaultValues = array(
 				'type'    => 'string',
 				'default' => ''
 			),
+			'textPosition'         => array(
+				'type'    => 'string',
+				'default' => 'bottom'
+			),
 			'blockID'         => array(
 				'type'    => 'string',
 				'default' => ''

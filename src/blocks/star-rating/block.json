@@ -1,68 +1,72 @@
 {
-     "$schema": "https://schemas.wp.org/trunk/block.json",
-     "apiVersion": 3,
-     "name": "ub/star-rating-block",
-     "title": "Star Rating",
-     "category": "ultimateblocks",
-     "description": "Add Star ratings in your posts/pages. You can customize size, color, numbers of stars.",
-     "keywords": [
-          "star rating",
-          "review",
-          "Ultimate Blocks"
-     ],
-     "attributes": {
-          "blockID": {
-               "type": "string",
-               "default": ""
-          },
-          "starCount": {
-               "type": "number",
-               "default": 5
-          },
-          "textFontSize": {
-               "type": "string",
-               "default": ""
-          },
-          "starSize": {
-               "type": "number",
-               "default": 20
-          },
-          "starColor": {
-               "type": "string",
-               "default": "#FFB901"
-          },
-          "selectedStars": {
-               "type": "number",
-               "default": 0
-          },
-          "reviewText": {
-               "type": "string",
-               "default": ""
-          },
-          "reviewTextAlign": {
-               "type": "string",
-               "default": "text"
-          },
-          "reviewTextColor": {
-               "type": "string",
-               "default": ""
-          },
-          "starAlign": {
-               "type": "string",
-               "default": "left"
-          },
-          "padding": {
-               "type": "object",
-               "default": {}
-          },
-          "margin": {
-               "type": "object",
-               "default": {}
-          },
-          "isShowReviewText": {
-               "type": "boolean",
-               "default": true
-          }
-     },
-     "supports": {}
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ub/star-rating-block",
+	"title": "Star Rating",
+	"category": "ultimateblocks",
+	"description": "Add Star ratings in your posts/pages. You can customize size, color, numbers of stars.",
+	"keywords": [
+		"star rating",
+		"review",
+		"Ultimate Blocks"
+	],
+	"attributes": {
+		"blockID": {
+			"type": "string",
+			"default": ""
+		},
+		"starCount": {
+			"type": "number",
+			"default": 5
+		},
+		"textFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"textPosition": {
+			"type": "string",
+			"default": "bottom"
+		},
+		"starSize": {
+			"type": "number",
+			"default": 20
+		},
+		"starColor": {
+			"type": "string",
+			"default": "#FFB901"
+		},
+		"selectedStars": {
+			"type": "number",
+			"default": 0
+		},
+		"reviewText": {
+			"type": "string",
+			"default": ""
+		},
+		"reviewTextAlign": {
+			"type": "string",
+			"default": "text"
+		},
+		"reviewTextColor": {
+			"type": "string",
+			"default": ""
+		},
+		"starAlign": {
+			"type": "string",
+			"default": "left"
+		},
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"margin": {
+			"type": "object",
+			"default": {}
+		},
+		"isShowReviewText": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {}
 }

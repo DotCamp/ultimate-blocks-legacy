@@ -16,8 +16,20 @@ function ub_render_star_rating_block($attributes){
             return $svgAttributes[0];
         }, $stars);
     }
+	$classes = array( 'ub-star-rating' );
+	if( !empty($textPosition) ){
+		$classes[] = 'ub-star-rating-text-' . esc_attr($textPosition) ;
+	}
+	if( !empty($starAlign) ){
+		$classes[] = 'ub-star-rating-align-' . esc_attr($starAlign) ;
+	}
 
-    return '<div class="wp-block-ub-star-rating ub-star-rating' . (isset($className) ? ' ' . esc_attr($className) : '') .
+	$wrapper_attributes = get_block_wrapper_attributes(
+		array(
+			'class' => implode(' ', $classes)
+		)
+	);
+    return '<div ' . $wrapper_attributes .
             '"' . ($blockID === '' ? '' : ' id="ub-star-rating-' . esc_attr($blockID) . '"') . '>
                 <div class="ub-star-outer-container"' .
                     ($blockID === '' ? '  style="justify-content:' . ($starAlign === 'center' ? 'center' :
