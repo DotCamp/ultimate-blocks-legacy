@@ -152,6 +152,8 @@ That's it. You're done!
 
 = 3.2.1 =
 
+* FIX: Post Excerpt null warning in post grid block.
+* FIX: Post image preserve aspect ratio not working properly on frontend.
 * IMPROVE: Run counter when it visible on the screen in the counter block.
 * IMPROVE: Image width in image slider.
 * NEW: Spacing between counter and label in counter block.

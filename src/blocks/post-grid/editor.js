@@ -18,6 +18,7 @@ export default function PostGridBlock(props) {
 			readMoreText,
 			postLayout,
 			columns,
+			preservePostImageAspectRatio,
 			postTitleTag,
 			isEqualHeight,
 		},
@@ -27,11 +28,14 @@ export default function PostGridBlock(props) {
 
 	const PostTag = postTitleTag;
 	const equalHeightClass = isEqualHeight ? " is-equal-height " : "";
+	const isPreservePostImageAspectRatio = preservePostImageAspectRatio
+		? " preserve-post-image-aspect-ratio "
+		: "";
 
 	const styles = getStyles(props.attributes);
 	return (
 		<section
-			className={`${className ? `${className} ` : ""}${equalHeightClass}ub-block-post-grid`}
+			className={`${className ? `${className} ` : ""}${equalHeightClass}${isPreservePostImageAspectRatio}ub-block-post-grid`}
 			style={styles}
 		>
 			<div

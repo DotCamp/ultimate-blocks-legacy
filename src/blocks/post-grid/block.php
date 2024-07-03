@@ -84,7 +84,7 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
                 $post_grid .= sprintf(
                     '<div class="ub-block-post-grid-image"><a href="%1$s" rel="bookmark" aria-hidden="true" tabindex="-1">%2$s</a></div>',
                     esc_url( get_permalink( $post_id ) ),
-                    wp_get_attachment_image( $post_thumb_id, array($attributes['postImageWidth'], $attributes['preservePostImageAspectRatio'] ? 0 : $attributes['postImageHeight']) )//use array 
+                    wp_get_attachment_image( $post_thumb_id, array($attributes['postImageWidth'], $attributes['preservePostImageAspectRatio'] ? 0 : $attributes['postImageHeight']) )//use array
                 );
             }
 
@@ -182,7 +182,7 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
                 $excerpt = null;
             }
 
-            if ( isset( $attributes['checkPostExcerpt'] ) && $attributes['checkPostExcerpt'] ) {
+            if ( isset( $attributes['checkPostExcerpt'] ) && $attributes['checkPostExcerpt'] && !empty( $excerpt )) {
                 $post_grid .= sprintf('<div class="ub-block-post-grid-excerpt-text">%1$s</div>', wp_kses_post( $excerpt ));
             }
 
@@ -238,15 +238,17 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
 
         $section_tag = 'section';
         $is_equal_height = isset($attributes['isEqualHeight']) && $attributes['isEqualHeight']  ? " is-equal-height " : "";
+        $is_preserve_post_image_aspect_ratio = isset($attributes['preservePostImageAspectRatio']) && $attributes['preservePostImageAspectRatio']  ? " preserve-post-image-aspect-ratio " : "";
 
         /* Output the post markup */
         $block_content = sprintf(
-            '<%1$s class="%2$s%5$s"><div class="%3$s">%4$s</div></%1$s>',
+            '<%1$s class="%2$s%5$s%6$s"><div class="%3$s">%4$s</div></%1$s>',
             $section_tag,
             esc_attr( $class ),
             esc_attr( $grid_class ),
             $post_grid,
-            esc_attr($is_equal_height)
+            esc_attr($is_equal_height),
+			$is_preserve_post_image_aspect_ratio
         );
         return $block_content;
     }

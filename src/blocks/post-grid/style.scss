@@ -8,6 +8,17 @@
 	}
 	margin: 0 0 1.2em 0;
 	position: relative;
+	&.preserve-post-image-aspect-ratio {
+		.ub-post-grid-items {
+			article {
+				.ub-block-post-grid-image {
+					img {
+						height: auto;
+					}
+				}
+			}
+		}
+	}
 	.ub-post-grid-items {
 		align-items: flex-start;
 		row-gap: var(--ub-post-grid-row-gap, 32px);
