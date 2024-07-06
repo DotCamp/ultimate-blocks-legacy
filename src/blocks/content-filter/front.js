@@ -44,6 +44,7 @@ Array.prototype.slice
 			const categoryIndex = JSON.parse(
 				this.getAttribute("data-categorynumber"),
 			);
+			console.log(this.parentElement);
 			const filterIndex = JSON.parse(this.getAttribute("data-filternumber"));
 
 			if (JSON.parse(this.getAttribute("data-tagisselected"))) {

@@ -85,10 +85,9 @@ function ub_render_content_filter_block($attributes, $content){
     $filterList = '';
 
     foreach((array)$newFilterArray as $key1 => $filterGroup){
-        $filterList .= '<div class="ub-content-filter-category"
-        data-canUseMultiple="' . json_encode($filterGroup['canUseMultiple']) . '">
+        $filterList .= '<div class="ub-content-filter-category">
         <div class="ub-content-filter-category-name">' . wp_kses_post($filterGroup['category']) . '</div>';
-        $filters = '<div class="ub-content-filter-buttons-wrapper">';
+        $filters = '<div class="ub-content-filter-buttons-wrapper" data-canUseMultiple="' . json_encode($filterGroup['canUseMultiple']) . '">';
         foreach($filterGroup['filters'] as $key2 => $tag){
             $filters .= '<div data-tagIsSelected="false" data-categoryNumber="' . $key1 . '"
             data-filterNumber="' . $key2 . '" ' . ($blockID === '' ? 'data-normalColor="' . esc_attr($buttonColor) . '" data-normalTextColor="' . esc_attr($buttonTextColor) .

@@ -33,6 +33,7 @@ Array.prototype.slice.call(document.getElementsByClassName("ub-content-filter-ta
       this.classList.toggle("ub-selected");
     }
     var categoryIndex = JSON.parse(this.getAttribute("data-categorynumber"));
+    console.log(this.parentElement);
     var filterIndex = JSON.parse(this.getAttribute("data-filternumber"));
     if (JSON.parse(this.getAttribute("data-tagisselected"))) {
       if (!JSON.parse(this.parentElement.getAttribute("data-canusemultiple"))) {
