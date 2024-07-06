@@ -51,11 +51,9 @@ var togglePanel = function togglePanel(target) {
     if (panelContent.classList.contains("ub-hiding")) {
       var convertedTop = convertToPixels(topPadding, topPaddingUnit);
       var convertedBottom = convertToPixels(bottomPadding, bottomPaddingUnit);
-      panelContent.style.height = "".concat(panelContent.scrollHeight + convertedTop + convertedBottom - (topPaddingUnit === "%" || bottomPaddingUnit === "%" ? panelContent.parentElement.scrollHeight : 0), "px");
-      Object.assign(panelContent.style, {
-        paddingTop: "".concat(convertedTop, "px"),
-        paddingBottom: "".concat(convertedBottom, "px")
-      });
+      panelContent.style.height = "".concat(panelContent.scrollHeight + convertedTop + convertedBottom, "px");
+      panelContent.style.paddingTop = "".concat(convertedTop, "px");
+      panelContent.style.paddingBottom = "".concat(convertedBottom, "px");
       document.querySelectorAll(".ub_image_slider").forEach(function (slider) {
         new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
       });
@@ -82,6 +80,24 @@ var togglePanel = function togglePanel(target) {
     embeddedContent.style.removeProperty("height");
   });
 };
+var handleKeyDown = function handleKeyDown(e, i, toggleHeads) {
+  if (e.key === "ArrowUp" && i > 0) {
+    e.preventDefault();
+    toggleHeads[i - 1].focus();
+  } else if (e.key === "ArrowDown" && i < toggleHeads.length - 1) {
+    e.preventDefault();
+    toggleHeads[i + 1].focus();
+  } else if ([" ", "Enter"].includes(e.key)) {
+    e.preventDefault();
+    togglePanel(e.currentTarget);
+  } else if (e.key === "Home" && i > 0) {
+    e.preventDefault();
+    toggleHeads[0].focus();
+  } else if (e.key === "End" && i < toggleHeads.length - 1) {
+    e.preventDefault();
+    toggleHeads[toggleHeads.length - 1].focus();
+  }
+};
 var attachTogglePanelEvents = function attachTogglePanelEvents() {
   document.querySelectorAll(".wp-block-ub-content-toggle").forEach(function (toggleContainer) {
     var toggleHeads = Array.from(toggleContainer.children).map(function (toggle) {
@@ -90,12 +106,9 @@ var attachTogglePanelEvents = function attachTogglePanelEvents() {
       return toggle && toggle.classList.contains("wp-block-ub-content-toggle-accordion-title-wrap");
     });
     toggleHeads.forEach(function (toggleHead, i) {
+      toggleHead.removeEventListener("keydown", handleKeyDown);
       toggleHead.addEventListener("keydown", function (e) {
-        if (e.key === "ArrowUp" && i > 0) e.preventDefault(), toggleHeads[i - 1].focus();
-        if (e.key === "ArrowDown" && i < toggleHeads.length - 1) e.preventDefault(), toggleHeads[i + 1].focus();
-        if ([" ", "Enter"].includes(e.key)) e.preventDefault(), togglePanel(toggleHead);
-        if (e.key === "Home" && i > 0) e.preventDefault(), toggleHeads[0].focus();
-        if (e.key === "End" && i < toggleHeads.length - 1) e.preventDefault(), toggleHeads[toggleHeads.length - 1].focus();
+        return handleKeyDown(e, i, toggleHeads);
       });
     });
     if (!toggleContainer.hasAttribute("data-preventcollapse")) {
@@ -119,6 +132,7 @@ var attachTogglePanelEvents = function attachTogglePanelEvents() {
         var panelId = instance.parentElement.getAttribute("id");
         var hash = location.hash.substring(1);
         if (panelId && panelId === hash) togglePanel(instance);
+        instance.removeEventListener("click", togglePanel);
         instance.addEventListener("click", function (e) {
           e.stopImmediatePropagation();
           togglePanel(instance);
