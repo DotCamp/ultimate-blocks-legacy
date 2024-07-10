@@ -186,7 +186,7 @@ class Ultimate_Blocks_Custom_CSS  {
 			$pattern = '/id=("|\')(.*?)("|\')/i';
 			preg_match($pattern, $matches_first_element[0], $matches);
 			if (!isset($matches[2])) {
-				$updated_content = preg_replace('/(<[^>]+)/', '$1 id="' . $block_id . '"', $content, 1);
+				$updated_content = preg_replace('/(<[^>]+)/', '$1 id="' . esc_attr($block_id) . '"', $content, 1);
 			}
 		}
 		return $updated_content;
