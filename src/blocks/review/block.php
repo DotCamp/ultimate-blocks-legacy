@@ -34,7 +34,7 @@ function ub_generatePercentageBar($value, $id, $activeColor, $inactiveColor ){
 }
 
 function ub_filterJsonldString($string){
-    return str_replace("\'", "'", wp_kses_post($string));
+    return str_replace("\'", "'", wp_kses_post(urlencode($string)));
 }
 
 function ub_render_review_block($attributes, $block_content, $block_instance){

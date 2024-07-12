@@ -152,6 +152,7 @@ That's it. You're done!
 
 = 3.2.1 =
 
+* FIX: Review Block Schema error.
 * FIX: Content Filter multiple selection not working.
 * FIX: Content Toggle performance issue.
 * FIX: Post Excerpt null warning in post grid block.
