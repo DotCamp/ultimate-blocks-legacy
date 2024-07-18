@@ -45,6 +45,7 @@
 		}
 	},
 	"supports": {
-		"inserter": false
+		"inserter": false,
+		"splitting": true
 	}
 }

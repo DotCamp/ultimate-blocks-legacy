@@ -63,21 +63,21 @@ const AdvancedHeadingEdit = ({
 	useEffect(() => {
 		if (!fontSize) {
 			let defaultFontSize = window.getComputedStyle(
-				elementRef.current
+				elementRef.current,
 			).fontSize;
 			setAttributes({ fontSize: parseInt(defaultFontSize) });
 		}
 
 		if (!fontFamily) {
 			let defaultFontFamily = window.getComputedStyle(
-				elementRef.current
+				elementRef.current,
 			).fontFamily;
 			setAttributes({ fontFamily: defaultFontFamily });
 		}
 
 		if (!lineHeight) {
 			let defaultLineHeight = window.getComputedStyle(
-				elementRef.current
+				elementRef.current,
 			).lineHeight;
 			setAttributes({ lineHeight: parseInt(defaultLineHeight) });
 		}
@@ -96,10 +96,10 @@ const AdvancedHeadingEdit = ({
 	// Clean up the content from img and script tags.
 	useEffect(() => {
 		const imgTagRegex = /<img[^>]+>/i;
-		const imgTagCleaned = content.replace(imgTagRegex, '');
+		const imgTagCleaned = content.replace(imgTagRegex, "");
 
 		const scriptTagRegex = /<script[^>]*?>.*?<\/script>/is;
-		const allCleaned = imgTagCleaned.replace(scriptTagRegex, '');
+		const allCleaned = imgTagCleaned.replace(scriptTagRegex, "");
 
 		setAttributes({ content: allCleaned });
 	}, []);
@@ -256,13 +256,14 @@ const AdvancedHeadingEdit = ({
 				placeholder={__("Write heading...", "ultimate-blocks")}
 				onChange={(value) => setAttributes({ content: value })}
 				style={styles}
+				identifier="content"
 				onSplit={(contentFragment) =>
 					contentFragment
 						? createBlock("ub/advanced-heading", {
 								...attributes,
 								blockID: "",
 								content: contentFragment,
-						  })
+							})
 						: createBlock("core/paragraph")
 				}
 				onReplace={onReplace}

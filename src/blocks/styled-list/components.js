@@ -948,6 +948,7 @@ export function StyledListItem(props) {
 				placeholder={"List item"}
 				keepPlaceholderOnFocus={true}
 				onChange={(itemText) => setAttributes({ itemText })}
+				identifier="itemText"
 				onSplit={(itemFragment) => {
 					const { blockID, itemText, ...filteredAttributes } = attributes;
 

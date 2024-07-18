@@ -29,7 +29,7 @@ export function OldStars(props) {
 					display: "flex",
 					flexDirection: "flex-row",
 				},
-				style
+				style,
 			)}
 		>
 			{[...Array(limit).keys()].map((i) => (
@@ -118,7 +118,7 @@ export function Stars(props) {
 					display: "flex",
 					flexDirection: "flex-row",
 				},
-				style
+				style,
 			)}
 		>
 			{[...Array(limit).keys()].map((i) => (
@@ -220,7 +220,7 @@ export function ReviewBody(props) {
 	const { titleAlign, authorAlign, descriptionAlign } = alignments;
 
 	const [average, setAverage] = useState(
-		parts?.map((i) => i.value).reduce((total, v) => total + v) / parts?.length
+		parts?.map((i) => i.value).reduce((total, v) => total + v) / parts?.length,
 	);
 	const [mouseOnHold, setMouseOnHold] = useState(false);
 
@@ -231,7 +231,7 @@ export function ReviewBody(props) {
 			if (ctaButton.current) {
 				setAttributes({
 					callToActionFontSize: parseInt(
-						getComputedStyle(ctaButton.current).fontSize.slice(0, -2)
+						getComputedStyle(ctaButton.current).fontSize.slice(0, -2),
 					),
 				});
 			}
@@ -247,7 +247,7 @@ export function ReviewBody(props) {
 
 	const setNewPercentage = (percentageBar, mouseX, i, j) => {
 		const newValue = Math.round(
-			(100 * (mouseX - percentageBar.x)) / percentageBar.width
+			(100 * (mouseX - percentageBar.x)) / percentageBar.width,
 		);
 		const newArray = [
 			...parts.slice(0, i),
@@ -258,7 +258,7 @@ export function ReviewBody(props) {
 		setActiveStarIndex(i);
 		setAverage(
 			newArray.map((i) => i.value).reduce((total, v) => total + v) /
-				newArray.length
+				newArray.length,
 		);
 	};
 	const styles = getStyles(props);
@@ -434,7 +434,7 @@ export function ReviewBody(props) {
 									setAverage(
 										newParts
 											.map((i) => i.value)
-											.reduce((total, v) => total + v) / newParts.length
+											.reduce((total, v) => total + v) / newParts.length,
 									);
 
 									if (i <= activeStarIndex) {
@@ -460,7 +460,7 @@ export function ReviewBody(props) {
 									setAverage(
 										newArray
 											.map((i) => i.value)
-											.reduce((total, v) => total + v) / newArray.length
+											.reduce((total, v) => total + v) / newArray.length,
 									);
 								}}
 								inactiveStarColor={inactiveStarColor}
@@ -480,7 +480,7 @@ export function ReviewBody(props) {
 											e.currentTarget.getBoundingClientRect(),
 											e.clientX,
 											i,
-											j
+											j,
 										)
 									}
 									//in cases where the user drags across the bar
@@ -492,7 +492,7 @@ export function ReviewBody(props) {
 												e.currentTarget.getBoundingClientRect(),
 												e.clientX,
 												i,
-												j
+												j,
 											);
 										}
 									}}

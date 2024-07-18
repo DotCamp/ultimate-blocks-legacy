@@ -76,5 +76,7 @@
       "default": {}
     }
   },
-  "supports": {}
+  "supports": {
+    "splitting": true
+  }
 }
