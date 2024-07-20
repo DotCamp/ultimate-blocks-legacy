@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'ultimate-blocks/ultimate-blocks',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '41116c35adb8d213769f0569e02d37ca0a5c8fa0',
+        'pretty_version' => 'dev-v3_2_2',
+        'version' => 'dev-v3_2_2',
+        'reference' => '3362cbe504afb076ee3c80e74d8087545600261b',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'ultimate-blocks/ultimate-blocks' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '41116c35adb8d213769f0569e02d37ca0a5c8fa0',
+            'pretty_version' => 'dev-v3_2_2',
+            'version' => 'dev-v3_2_2',
+            'reference' => '3362cbe504afb076ee3c80e74d8087545600261b',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
