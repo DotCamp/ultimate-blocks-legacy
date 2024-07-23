@@ -2,7 +2,7 @@
 Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, erdembircan, alexius08
 Tags: blocks, gutenberg blocks, gutenberg, block editor, free
 Requires at least: 5.8
-Tested up to: 6.5
+Tested up to: 6.6
 Stable tag: 3.2.1
 Requires PHP: 5.6
 License: GPL3+
