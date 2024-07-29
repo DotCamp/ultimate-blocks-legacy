@@ -254,7 +254,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	const tableOfContents = document.querySelectorAll(
 		'.ub_table-of-contents[data-linktodivider="true"]',
 	);
-	const dividers = document.querySelectorAll(".wp-block-ub-divider");
+
+	const dividers = document.querySelectorAll(
+		".wp-block-ub-divider:not(.ub-divider-orientation-vertical)",
+	);
 
 	if (tableOfContents.length > 0 && dividers.length > 0) {
 		dividers.forEach((divider) => {

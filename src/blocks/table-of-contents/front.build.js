@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Link to divider block.
   var tableOfContents = document.querySelectorAll('.ub_table-of-contents[data-linktodivider="true"]');
-  var dividers = document.querySelectorAll(".wp-block-ub-divider");
+  var dividers = document.querySelectorAll(".wp-block-ub-divider:not(.ub-divider-orientation-vertical)");
   if (tableOfContents.length > 0 && dividers.length > 0) {
     dividers.forEach(function (divider) {
       var closestTOC = null;
