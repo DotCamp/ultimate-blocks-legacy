@@ -4,8 +4,9 @@ function ub_render_table_of_contents_block($attributes){
     extract($attributes);
     $linkArray = json_decode($links, true);
 	$linkArray = is_null($linkArray) ? [] : $linkArray;
+	$is_link_to_divider = isset($linkToDivider) && $linkToDivider;
 
-    $filteredHeaders = $linkArray ? (array_values(array_filter($linkArray, function ($header) use ($allowedHeaders){
+	$filteredHeaders = $linkArray ? (array_values(array_filter($linkArray, function ($header) use ($allowedHeaders){
         return $allowedHeaders[$header['level'] - 1] &&
            (!array_key_exists("disabled",  $header) || (array_key_exists("disabled",  $header) && !$header['disabled']));
         }))) : [];
@@ -115,11 +116,14 @@ function ub_render_table_of_contents_block($attributes){
 		array(
 			'class' => implode( ' ', $classes ),
 			'id'    => $blockID === '' ? '' : 'ub_table-of-contents-' . $blockID . '',
+			'data-linktodivider' => $is_link_to_divider ? "true" : "false",
+			'data-showtext' => $showText ?: __('show', 'ultimate-blocks'),
+			'data-hidetext' => $hideText ?: __('hide', 'ultimate-blocks'),
+			'data-scrolltype' => $scrollOption,
 		)
 	);
-    return '<div ' . $block_wrapper_attributes .
-                '" data-showtext="' . ($showText ?: __('show', 'ultimate-blocks') ) . '" data-hidetext="' . ($hideText ?: __('hide', 'ultimate-blocks'))
-                . '" data-scrolltype="' . esc_attr($scrollOption) . '"' . ($scrollOption === 'fixedamount' ? ' data-scrollamount="' . esc_attr($scrollOffset) . '"' : '')
+    return '<div ' . $block_wrapper_attributes
+                . ($scrollOption === 'fixedamount' ? ' data-scrollamount="' . esc_attr($scrollOffset) . '"' : '')
                 . ($scrollOption === 'namedelement' ? ' data-scrolltarget="' . $targetType . esc_attr($scrollTarget) . '"' : '') . ' data-initiallyhideonmobile="' . json_encode($hideOnMobile) . '"
                     data-initiallyshow="' . json_encode($showList) . '">'.
                 (('<div class="ub_table-of-contents-header-container"><div class="ub_table-of-contents-header">

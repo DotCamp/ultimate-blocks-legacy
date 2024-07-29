@@ -712,6 +712,7 @@ export const inspectorControls = (props) => {
 		numColumns,
 		showText,
 		hideText,
+		linkToDivider,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -818,56 +819,42 @@ export const inspectorControls = (props) => {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__("Collapsible")} initialOpen={false}>
-					<PanelRow>
-						<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
-						<ToggleControl
-							id="ub_toc_toggle_display"
-							checked={allowToCHiding}
-							onChange={(allowToCHiding) =>
-								setAttributes({
-									allowToCHiding,
-									showList: allowToCHiding ? showList : true,
-									hideOnMobile: false,
-								})
-							}
-						/>
-					</PanelRow>
+					<ToggleControl
+						label={__("Collapsible", "ultimate-blocks")}
+						id="ub_toc_toggle_display"
+						checked={allowToCHiding}
+						onChange={(allowToCHiding) =>
+							setAttributes({
+								allowToCHiding,
+								showList: allowToCHiding ? showList : true,
+								hideOnMobile: false,
+							})
+						}
+					/>
 					{allowToCHiding && (
 						<>
-							<PanelRow>
-								<TextControl
-									label={__("Show text")}
-									value={showText}
-									onChange={(showText) => setAttributes({ showText })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<TextControl
-									label={__("Hide text")}
-									value={hideText}
-									onChange={(hideText) => setAttributes({ hideText })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
-								<ToggleControl
-									id="ub_show_toc"
-									checked={showList}
-									onChange={() => setAttributes({ showList: !showList })}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<label htmlFor="ub_hide_on_mobile">
-									{__("Initial Hide on Mobile")}
-								</label>
-								<ToggleControl
-									id="ub_hide_on_mobile"
-									checked={hideOnMobile}
-									onChange={() =>
-										setAttributes({ hideOnMobile: !hideOnMobile })
-									}
-								/>
-							</PanelRow>
+							<TextControl
+								label={__("Show text", "ultimate-blocks")}
+								value={showText}
+								onChange={(showText) => setAttributes({ showText })}
+							/>
+							<TextControl
+								label={__("Hide text", "ultimate-blocks")}
+								value={hideText}
+								onChange={(hideText) => setAttributes({ hideText })}
+							/>
+							<ToggleControl
+								label={__("Initial Show", "ultimate-blocks")}
+								id="ub_show_toc"
+								checked={showList}
+								onChange={() => setAttributes({ showList: !showList })}
+							/>
+							<ToggleControl
+								label={__("Initial Hide on Mobile", "ultimate-blocks")}
+								id="ub_hide_on_mobile"
+								checked={hideOnMobile}
+								onChange={() => setAttributes({ hideOnMobile: !hideOnMobile })}
+							/>
 						</>
 					)}
 				</PanelBody>
@@ -919,49 +906,40 @@ export const inspectorControls = (props) => {
 							allowReset
 						/>
 					)}
-					<PanelRow>
-						<label htmlFor="ub_toc_scroll">
-							{__("Enable smooth scrolling")}
-						</label>
-						<ToggleControl
-							id="ub_toc_scroll"
-							checked={enableSmoothScroll}
-							onChange={() => {
-								const tocInstances = getBlocks().filter(
-									(block) => block.name === "ub/table-of-contents-block",
-								);
-								tocInstances.forEach((instance) => {
-									updateBlockAttributes(instance.clientId, {
-										enableSmoothScroll: !enableSmoothScroll,
-									});
+					<ToggleControl
+						label={__("Enable smooth scrolling", "ultimate-blocks")}
+						id="ub_toc_scroll"
+						checked={enableSmoothScroll}
+						onChange={() => {
+							const tocInstances = getBlocks().filter(
+								(block) => block.name === "ub/table-of-contents-block",
+							);
+							tocInstances.forEach((instance) => {
+								updateBlockAttributes(instance.clientId, {
+									enableSmoothScroll: !enableSmoothScroll,
 								});
-							}}
-						/>
-					</PanelRow>
+							});
+						}}
+					/>
 				</PanelBody>
 				<PanelBody title={__("Additional")} initialOpen={false}>
-					<PanelRow>
-						<label htmlFor="ub_toc_enable_latin_conversion">
-							{__("Romanize anchor links")}
-						</label>
-						<ToggleControl
-							id="ub_toc_enable_latin_conversion"
-							checked={allowToLatin}
-							onChange={(e) => setAttributes({ allowToLatin: e })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<label htmlFor="ub_toc_toggle_diacritics">
-							{__("Remove diacritics from anchor links")}
-						</label>
-						<ToggleControl
-							id="ub_toc_toggle_diacritics"
-							checked={removeDiacritics}
-							onChange={(removeDiacritics) =>
-								setAttributes({ removeDiacritics })
-							}
-						/>
-					</PanelRow>
+					<ToggleControl
+						label={__("Link to divider", "ultimate-blocks")}
+						checked={linkToDivider}
+						onChange={() => setAttributes({ linkToDivider: !linkToDivider })}
+					/>
+					<ToggleControl
+						label={__("Romanize anchor links", "ultimate-blocks")}
+						id="ub_toc_enable_latin_conversion"
+						checked={allowToLatin}
+						onChange={(e) => setAttributes({ allowToLatin: e })}
+					/>
+					<ToggleControl
+						label={__("Remove diacritics from anchor links", "ultimate-blocks")}
+						id="ub_toc_toggle_diacritics"
+						checked={removeDiacritics}
+						onChange={(removeDiacritics) => setAttributes({ removeDiacritics })}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="styles">

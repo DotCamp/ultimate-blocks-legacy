@@ -150,6 +150,10 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.2.2 =
+
+* NEW: Link to Divider Feature in Table of content block.
+
 = 3.2.1 =
 
 * FIX: On Split not working on WP 6.6.

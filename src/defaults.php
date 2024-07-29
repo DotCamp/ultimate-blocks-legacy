@@ -2773,6 +2773,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'linkToDivider' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
             'allowToCHiding' => array(
                 'type' => 'boolean',
                 'default' => false
