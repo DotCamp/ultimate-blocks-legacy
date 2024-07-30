@@ -249,63 +249,38 @@ function ub_generate_widget_block_list( $output = false ) {
 }
 
 function ultimate_blocks_cgb_block_assets() {
-	// Styles.
-	if ( is_singular() and has_blocks() ) {
-		require_once plugin_dir_path( __FILE__ ) . 'common.php';
+	ub_load_assets();
 
-		$main_assets_loaded = false;
+	require_once plugin_dir_path( __FILE__ ) . 'common.php';
 
-		$advanced_heading_font_list = array();
+	$advanced_heading_font_list = array();
 
-		$widget_blocks = ub_generate_widget_block_list();
+	$widget_blocks = ub_generate_widget_block_list();
 
-		$defaultFont = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif';
+	$defaultFont = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif';
 
-		foreach ( $widget_blocks as $block ) {
-			if ( strpos( $block['blockName'], 'ub/' ) === 0 ) {
+	foreach ( $widget_blocks as $block ) {
+		if ( strpos( $block['blockName'], 'ub/advanced-heading' ) !== 0 ) { continue; }
 
-				if ( ! $main_assets_loaded ) {
-					ub_load_assets();
-					$main_assets_loaded = true;
-				}
-
-				if ( strpos( $block['blockName'], 'ub/advanced-heading' ) === 0 ) {
-					if ( $block['attrs']['fontFamily'] !== $defaultFont && ! in_array( $block['attrs']['fontFamily'],
-									$advanced_heading_font_list ) ) {
-						array_push( $advanced_heading_font_list, $block['attrs']['fontFamily'] );
-					}
-				}
-			}
+		if ( $block['attrs']['fontFamily'] !== $defaultFont && ! in_array( $block['attrs']['fontFamily'],
+						$advanced_heading_font_list ) ) {
+			array_push( $advanced_heading_font_list, $block['attrs']['fontFamily'] );
 		}
+	}
 
-		if ( ! ( $main_assets_loaded ) ) {
-			$presentBlocks = ub_getPresentBlocks();
+	$presentBlocks = ub_getPresentBlocks();
 
-			foreach ( $presentBlocks as $block ) {
-				if ( strpos( $block['blockName'], 'ub/' ) === 0 ) {
+	foreach ( $presentBlocks as $block ) {
+		if ( strpos( $block['blockName'], 'ub/advanced-heading' ) !== 0 ) { continue; }
 
-					if ( ! $main_assets_loaded ) {
-						ub_load_assets();
-						$main_assets_loaded = true;
-					}
-
-					if ( strpos( $block['blockName'], 'ub/advanced-heading' ) === 0 ) {
-						if ( $block['attrs']['fontFamily'] !== $defaultFont && ! in_array( $block['attrs']['fontFamily'],
-										$advanced_heading_font_list ) ) {
-							array_push( $advanced_heading_font_list, $block['attrs']['fontFamily'] );
-						}
-
-					}
-				}
-			}
+		if ( $block['attrs']['fontFamily'] !== $defaultFont && ! in_array( $block['attrs']['fontFamily'],
+						$advanced_heading_font_list ) ) {
+			array_push( $advanced_heading_font_list, $block['attrs']['fontFamily'] );
 		}
+	}
 
-		if ( count( $advanced_heading_font_list ) > 0 ) {
-			ub_advanced_heading_add_assets( $advanced_heading_font_list );
-		}
-
-	} elseif ( ub_check_is_gutenberg_page() ) {
-		ub_load_assets();
+	if ( count( $advanced_heading_font_list ) > 0 ) {
+		ub_advanced_heading_add_assets( $advanced_heading_font_list );
 	}
 } // End function ultimate_blocks_cgb_block_assets().
 
