@@ -174,6 +174,12 @@ export const inspectorControls = (props) => {
 						attrKey="margin"
 						label={__("Margin", "ultimate-blocks")}
 					/>
+					<SpacingControl
+						showByDefault
+						sides={["all"]}
+						attrKey="gap"
+						label={__("Gap", "ultimate-blocks")}
+					/>
 				</PanelBody>
 			</InspectorControls>
 		</>

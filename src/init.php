@@ -1046,7 +1046,9 @@ function ub_include_block_attribute_css() {
 					$styles = ub_get_spacing_styles($attributes);
 
 					$prefix           = '#ub-star-rating-' . $attributes['blockID'];
-					$blockStylesheets .= $prefix . '{' . $styles . '--ub-star-rating-font-size:'. $attributes['textFontSize'] . '' . '}';
+					$gap = isset($attributes['gap']['all']) ?  Ultimate_Blocks\includes\spacing_preset_css_var($attributes['gap']['all']) : "";
+
+					$blockStylesheets .= $prefix . '{' . $styles . '--ub-star-rating-font-size:'. $attributes['textFontSize'] . ';'. '--ub-star-rating-gap:' . $gap .';'. '}';
 
 					$blockStylesheets .= $prefix . ' .ub-star-outer-container{' . PHP_EOL .
 										 'justify-content: ' . ( $attributes['starAlign'] === 'center' ? 'center' :

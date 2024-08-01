@@ -9,8 +9,9 @@
 }
 .ub-star-rating {
 	display: flex;
-	gap: 20px;
 	flex-direction: column;
+	gap: var(--ub-star-rating-gap, 20px);
+
 	&.ub-star-rating-text-top {
 		flex-direction: column-reverse;
 	}

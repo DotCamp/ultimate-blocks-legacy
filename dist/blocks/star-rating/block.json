@@ -66,6 +66,10 @@
     "isShowReviewText": {
       "type": "boolean",
       "default": true
+    },
+    "gap": {
+      "type": "object",
+      "default": {}
     }
   },
   "supports": {}

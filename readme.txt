@@ -153,6 +153,7 @@ That's it. You're done!
 = 3.2.2 =
 
 * NEW: Link to Divider Feature in Table of content block.
+* NEW: Add gap option in Star Rating block.
 
 = 3.2.1 =
 
