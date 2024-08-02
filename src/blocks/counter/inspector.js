@@ -11,6 +11,7 @@ import {
 	FontAppearanceControl,
 	LineHeightControl,
 	LetterSpacingControl,
+	FontFamilyControl,
 } from "../components";
 
 function Inspector(props) {
@@ -74,6 +75,14 @@ function Inspector(props) {
 				/>
 			</InspectorControls>
 			<InspectorControls group="typography">
+				<FontFamilyControl
+					attrKey={"counterFontFamily"}
+					label={__("Counter Font Family", "ultimate-blocks")}
+				/>
+				<FontFamilyControl
+					attrKey={"labelFontFamily"}
+					label={__("Label Font Family", "ultimate-blocks")}
+				/>
 				<CustomFontSizePicker
 					attrKey={"counterFontSize"}
 					label={__("Counter Font", "ultimate-blocks")}

@@ -21,6 +21,8 @@ class Ultimate_Counter {
 		$label_decoration 	 	= isset($attributes['labelDecoration']) ? $attributes['labelDecoration'] : "";
 		$counter_font_size 	 	= $attributes['counterFontSize'];
 		$counter_decoration  	= isset($attributes['counterDecoration']) ? $attributes['counterDecoration'] : "";
+		$counter_font_family 	= isset($attributes['counterFontFamily']) ? $attributes['counterFontFamily'] : "";
+		$label_font_family   	= isset($attributes['labelFontFamily']) ? $attributes['labelFontFamily'] : "";
 		$counter_line_height 	= isset($attributes['counterLineHeight']) ? $attributes['counterLineHeight'] : "";
 		$label_line_height   	= isset($attributes['labelLineHeight']) ? $attributes['labelLineHeight'] : "";
 		$counter_letter_spacing	= isset($attributes['counterLetterSpacing']) ? $attributes['counterLetterSpacing'] : "";
@@ -45,6 +47,8 @@ class Ultimate_Counter {
                '--ub-counter-gap'            	   => $gap,
                '--ub-counter-decoration'             => $counter_decoration,
                '--ub-counter-label-decoration'       => $label_decoration,
+               '--ub-counter-font-family'            => $counter_font_family,
+               '--ub-counter-label-font-family'      => $label_font_family,
                '--ub-counter-line-height'            => $counter_line_height,
                '--ub-counter-label-line-height'      => $label_line_height,
                '--ub-counter-letter-spacing'         => $counter_letter_spacing,

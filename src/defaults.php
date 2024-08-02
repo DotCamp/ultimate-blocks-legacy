@@ -3012,6 +3012,14 @@ $defaultValues = array(
 					'type' => 'string',
 					'default' => ''
 				),
+				'counterFontFamily' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'labelFontFamily' => array(
+					'type' => 'string',
+					'default' => ''
+				),
 				'counterDecoration' => array(
 					'type' => 'string',
 					'default' => ''

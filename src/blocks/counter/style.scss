@@ -14,12 +14,14 @@
 		font-style: var(--ub-counter-font-style);
 		font-weight: var(--ub-counter-font-weight);
 		letter-spacing: var(--ub-counter-letter-spacing);
+		font-family: var(--ub-counter-font-family);
 	}
 	.ub_counter-label-wrapper {
 		text-decoration: var(--ub-counter-label-decoration);
 		font-style: var(--ub-counter-label-font-style);
 		line-height: var(--ub-counter-label-line-height);
 		font-weight: var(--ub-counter-label-font-weight);
+		font-family: var(--ub-counter-label-font-family);
 		letter-spacing: var(--ub-counter-label-letter-spacing);
 		font-size: var(--ub-counter-label-font-size);
 		color: var(--ub-counter-label-color);

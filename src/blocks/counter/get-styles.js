@@ -47,6 +47,8 @@ export function getStyles(attributes) {
 		"--ub-counter-margin-bottom": marginObj?.bottom,
 		"--ub-counter-margin-left": marginObj?.left,
 		"--ub-counter-gap": gap,
+		"--ub-counter-font-family": attributes.counterFontFamily,
+		"--ub-counter-label-font-family": attributes.labelFontFamily,
 		"--ub-counter-decoration": attributes.counterDecoration,
 		"--ub-counter-label-decoration": attributes.labelDecoration,
 		"--ub-counter-line-height": attributes.counterLineHeight,

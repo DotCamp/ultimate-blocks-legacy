@@ -12,3 +12,4 @@ export { default as TextDecorationControl } from "./TextDecorationControl";
 export { default as FontAppearanceControl } from "./FontAppearanceControl";
 export { default as LineHeightControl } from "./LineHeightControl";
 export { default as LetterSpacingControl } from "./LetterSpacingControl";
+export { default as FontFamilyControl } from "./FontFamilyControl";

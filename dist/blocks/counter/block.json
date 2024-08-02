@@ -22,6 +22,14 @@
       "type": "string",
       "default": "16px"
     },
+    "counterFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "labelFontFamily": {
+      "type": "string",
+      "default": ""
+    },
     "counterDecoration": {
       "type": "string",
       "default": ""
