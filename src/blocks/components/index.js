@@ -9,4 +9,5 @@ export { default as BorderControl } from "./BorderControl";
 export { default as TabsPanelControl } from "./TabsPanelControl";
 export { default as SpacingControlWithToolsPanel } from "./SpacingControlWithToolsPanel";
 export { default as TextDecorationControl } from "./TextDecorationControl";
-export { default as FontWeightControl } from "./FontWeightControl";
+export { default as FontAppearanceControl } from "./FontAppearanceControl";
+export { default as LineHeightControl } from "./LineHeightControl";

@@ -49,6 +49,8 @@ export function getStyles(attributes) {
 		"--ub-counter-gap": gap,
 		"--ub-counter-decoration": attributes.counterDecoration,
 		"--ub-counter-label-decoration": attributes.labelDecoration,
+		"--ub-counter-line-height": attributes.counterLineHeight,
+		"--ub-counter-label-line-height": attributes.labelLineHeight,
 		"--ub-counter-label-font-style": labelFontStyle,
 		"--ub-counter-label-font-weight": labelFontWeight,
 		"--ub-counter-font-style": counterFontStyle,

@@ -1,6 +1,7 @@
 import {
-	__experimentalTextDecorationControl as WPTextDecorationControl,
+	__experimentalFontAppearanceControl as FontAppearanceControl,
 	useBlockEditContext,
+	LineHeightControl as WPLineHeightControl,
 } from "@wordpress/block-editor";
 import { isEmpty } from "lodash";
 import { __ } from "@wordpress/i18n";
@@ -10,12 +11,7 @@ import {
 	BaseControl,
 } from "@wordpress/components";
 
-function TextDecorationControl({
-	attrKey,
-	label,
-	showDefault,
-	isSingle = true,
-}) {
+function LineHeightControl({ attrKey, label, showDefault, isSingle = true }) {
 	const { clientId } = useBlockEditContext();
 	const attributes = useSelect(
 		(select) => select("core/block-editor").getSelectedBlock().attributes,
@@ -41,14 +37,18 @@ function TextDecorationControl({
 			}}
 		>
 			<BaseControl label={label}>
-				<WPTextDecorationControl
-					className="ub-hide-label"
-					value={attributes[attrKey]}
-					onChange={(newValue) => setAttributes({ [attrKey]: newValue })}
-				/>
+				<div className="ub-hide-label">
+					<WPLineHeightControl
+						__nextHasNoMarginBottom
+						__unstableInputWidth="auto"
+						size="__unstable-large"
+						value={attributes[attrKey]}
+						onChange={(newValue) => setAttributes({ [attrKey]: newValue })}
+					/>
+				</div>
 			</BaseControl>
 		</ToolsPanelItem>
 	);
 }
 
-export default TextDecorationControl;
+export default LineHeightControl;

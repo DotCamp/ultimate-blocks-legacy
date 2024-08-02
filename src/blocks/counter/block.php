@@ -21,6 +21,8 @@ class Ultimate_Counter {
 		$label_decoration 	 = isset($attributes['labelDecoration']) ? $attributes['labelDecoration'] : "";
 		$counter_font_size 	 = $attributes['counterFontSize'];
 		$counter_decoration  = isset($attributes['counterDecoration']) ? $attributes['counterDecoration'] : "";
+		$counter_line_height = isset($attributes['counterLineHeight']) ? $attributes['counterLineHeight'] : "";
+		$label_line_height   = isset($attributes['labelLineHeight']) ? $attributes['labelLineHeight'] : "";
 		$counter_font_style  = isset( $attributes['counterFontAppearance']['fontStyle'] ) ? $attributes['counterFontAppearance']['fontStyle'] : "";
 		$counter_font_weight = isset( $attributes['counterFontAppearance']['fontWeight'] ) ? $attributes['counterFontAppearance']['fontWeight'] : "";
 		$label_font_style 	 = isset( $attributes['labelFontAppearance']['fontStyle'] ) ? $attributes['labelFontAppearance']['fontStyle'] : "";
@@ -41,6 +43,8 @@ class Ultimate_Counter {
                '--ub-counter-gap'            	   => $gap,
                '--ub-counter-decoration'             => $counter_decoration,
                '--ub-counter-label-decoration'       => $label_decoration,
+               '--ub-counter-line-height'             => $counter_line_height,
+               '--ub-counter-label-line-height'       => $label_line_height,
 			'--ub-counter-label-font-style'	   => $label_font_style,
 			'--ub-counter-label-font-weight'	   => $label_font_weight,
 			'--ub-counter-font-style'	   	   => $counter_font_style,

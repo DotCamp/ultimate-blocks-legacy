@@ -1,5 +1,5 @@
 import {
-	__experimentalFontAppearanceControl as FontAppearanceControl,
+	__experimentalFontAppearanceControl as WPFontAppearanceControl,
 	useBlockEditContext,
 } from "@wordpress/block-editor";
 import { isEmpty } from "lodash";
@@ -10,7 +10,12 @@ import {
 	BaseControl,
 } from "@wordpress/components";
 
-function FontWeightControl({ attrKey, label, showDefault }) {
+function FontAppearanceControl({
+	attrKey,
+	label,
+	showDefault,
+	isSingle = true,
+}) {
 	const { clientId } = useBlockEditContext();
 	const attributes = useSelect(
 		(select) => select("core/block-editor").getSelectedBlock().attributes,
@@ -21,6 +26,7 @@ function FontWeightControl({ attrKey, label, showDefault }) {
 	};
 	return (
 		<ToolsPanelItem
+			className={isSingle ? "single-column" : ""}
 			panelId={clientId}
 			isShownByDefault={showDefault}
 			resetAllFilter={() =>
@@ -35,8 +41,8 @@ function FontWeightControl({ attrKey, label, showDefault }) {
 			}}
 		>
 			<BaseControl label={label}>
-				<div className="ub-font-appearance">
-					<FontAppearanceControl
+				<div className="ub-hide-label">
+					<WPFontAppearanceControl
 						size={"__unstable-large"}
 						value={attributes[attrKey]}
 						onChange={(newValue) => setAttributes({ [attrKey]: newValue })}
@@ -47,4 +53,4 @@ function FontWeightControl({ attrKey, label, showDefault }) {
 	);
 }
 
-export default FontWeightControl;
+export default FontAppearanceControl;
