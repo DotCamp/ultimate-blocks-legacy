@@ -3012,6 +3012,14 @@ $defaultValues = array(
 					'type' => 'string',
 					'default' => ''
 				),
+				'counterDecoration' => array(
+					'type' => 'string',
+					'default' => ''
+				),
+				'labelDecoration' => array(
+					'type' => 'string',
+					'default' => ''
+				),
 				'startNumber' => array(
 					'type' => 'string',
 					'default' => '0'

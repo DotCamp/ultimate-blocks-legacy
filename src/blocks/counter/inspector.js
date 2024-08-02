@@ -7,6 +7,7 @@ import {
 	CustomToggleGroupControl,
 	SpacingControl,
 	ColorSettings,
+	TextDecorationControl,
 } from "../components";
 
 function Inspector(props) {
@@ -77,6 +78,14 @@ function Inspector(props) {
 				<CustomFontSizePicker
 					attrKey={"labelFontSize"}
 					label={__("Label Font", "ultimate-blocks")}
+				/>
+				<TextDecorationControl
+					attrKey={"counterDecoration"}
+					label={__("Counter Decoration", "ultimate-blocks")}
+				/>
+				<TextDecorationControl
+					attrKey={"labelDecoration"}
+					label={__("Label Decoration", "ultimate-blocks")}
 				/>
 			</InspectorControls>
 			<InspectorControls group="styles">

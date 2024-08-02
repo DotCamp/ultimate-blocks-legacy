@@ -9,8 +9,10 @@
 	margin-left: var(--ub-counter-margin-left, auto) !important;
 	.ub_counter-number-wrapper {
 		font-size: var(--ub-counter-font-size);
+		text-decoration: var(--ub-counter-decoration);
 	}
 	.ub_counter-label-wrapper {
+		text-decoration: var(--ub-label-decoration);
 		font-size: var(--ub-counter-label-font-size);
 		color: var(--ub-counter-label-color);
 	}

@@ -32,6 +32,8 @@ export function getStyles(attributes) {
 		"--ub-counter-margin-bottom": marginObj?.bottom,
 		"--ub-counter-margin-left": marginObj?.left,
 		"--ub-counter-gap": gap,
+		"--ub-counter-decoration": attributes.counterDecoration,
+		"--ub-label-decoration": attributes.labelDecoration,
 	};
 
 	return omitBy(styles, (value) => {

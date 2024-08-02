@@ -22,6 +22,14 @@
       "type": "string",
       "default": "16px"
     },
+    "counterDecoration": {
+      "type": "string",
+      "default": ""
+    },
+    "labelDecoration": {
+      "type": "string",
+      "default": ""
+    },
     "startNumber": {
       "type": "string",
       "default": "0"
