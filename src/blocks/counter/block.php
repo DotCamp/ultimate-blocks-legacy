@@ -13,14 +13,18 @@ class Ultimate_Counter {
      }
 
      public function ub_get_counter_block_styles( $attributes ) {
-		$gap 			= isset($attributes['gap']['all']) ?  Ultimate_Blocks\includes\spacing_preset_css_var($attributes['gap']['all']) : "";
-		$margin 			= Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
-          $padding 			= Ultimate_Blocks\includes\get_spacing_css( isset($attributes['padding']) ? $attributes['padding'] : array() );
-          $label_color 		= $attributes['labelColor'];
-          $label_font_size 	= $attributes['labelFontSize'];
-		$label_decoration 	= isset($attributes['labelDecoration']) ? $attributes['labelDecoration'] : "";
-		$counter_font_size 	= $attributes['counterFontSize'];
-		$counter_decoration = isset($attributes['counterDecoration']) ? $attributes['counterDecoration'] : "";
+		$gap 			 = isset($attributes['gap']['all']) ?  Ultimate_Blocks\includes\spacing_preset_css_var($attributes['gap']['all']) : "";
+		$margin 			 = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
+          $padding 			 = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['padding']) ? $attributes['padding'] : array() );
+          $label_color 		 = $attributes['labelColor'];
+          $label_font_size 	 = $attributes['labelFontSize'];
+		$label_decoration 	 = isset($attributes['labelDecoration']) ? $attributes['labelDecoration'] : "";
+		$counter_font_size 	 = $attributes['counterFontSize'];
+		$counter_decoration  = isset($attributes['counterDecoration']) ? $attributes['counterDecoration'] : "";
+		$counter_font_style  = isset( $attributes['counterFontAppearance']['fontStyle'] ) ? $attributes['counterFontAppearance']['fontStyle'] : "";
+		$counter_font_weight = isset( $attributes['counterFontAppearance']['fontWeight'] ) ? $attributes['counterFontAppearance']['fontWeight'] : "";
+		$label_font_style 	 = isset( $attributes['labelFontAppearance']['fontStyle'] ) ? $attributes['labelFontAppearance']['fontStyle'] : "";
+		$label_font_weight 	 = isset( $attributes['labelFontAppearance']['fontWeight'] ) ? $attributes['labelFontAppearance']['fontWeight'] : "";
 
           $styles = array(
                '--ub-counter-padding-top'            => isset($padding['top']) ? $padding['top'] : "",
@@ -36,7 +40,11 @@ class Ultimate_Counter {
                '--ub-counter-label-font-size'        => $label_font_size,
                '--ub-counter-gap'            	   => $gap,
                '--ub-counter-decoration'             => $counter_decoration,
-               '--ub-label-decoration'               => $label_decoration
+               '--ub-counter-label-decoration'       => $label_decoration,
+			'--ub-counter-label-font-style'	   => $label_font_style,
+			'--ub-counter-label-font-weight'	   => $label_font_weight,
+			'--ub-counter-font-style'	   	   => $counter_font_style,
+			'--ub-counter-font-weight'	   	   => $counter_font_weight,
           );
 
 	     return Ultimate_Blocks\includes\generate_css_string( $styles );

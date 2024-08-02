@@ -30,6 +30,20 @@
       "type": "string",
       "default": ""
     },
+    "counterFontAppearance": {
+      "type": "object",
+      "default": {
+        "fontStyle": "",
+        "fontWeight": ""
+      }
+    },
+    "labelFontAppearance": {
+      "type": "object",
+      "default": {
+        "fontStyle": "",
+        "fontWeight": ""
+      }
+    },
     "startNumber": {
       "type": "string",
       "default": "0"

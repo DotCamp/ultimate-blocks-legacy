@@ -19,6 +19,21 @@ export function getStyles(attributes) {
 	const paddingObj = getSpacingCss(padding);
 	const marginObj = getSpacingCss(margin);
 	const gap = getSpacingPresetCssVar(attributes.gap?.all) ?? "";
+	const counterFontStyle = !isEmpty(attributes.counterFontAppearance.fontStyle)
+		? attributes.counterFontAppearance.fontStyle
+		: "";
+	const counterFontWeight = !isEmpty(
+		attributes.counterFontAppearance.fontWeight,
+	)
+		? attributes.counterFontAppearance.fontWeight
+		: "";
+	const labelFontStyle = !isEmpty(attributes.labelFontAppearance.fontStyle)
+		? attributes.labelFontAppearance.fontStyle
+		: "";
+	const labelFontWeight = !isEmpty(attributes.labelFontAppearance.fontWeight)
+		? attributes.labelFontAppearance.fontWeight
+		: "";
+
 	let styles = {
 		"--ub-counter-label-color": attributes?.labelColor,
 		"--ub-counter-font-size": attributes?.counterFontSize,
@@ -33,7 +48,11 @@ export function getStyles(attributes) {
 		"--ub-counter-margin-left": marginObj?.left,
 		"--ub-counter-gap": gap,
 		"--ub-counter-decoration": attributes.counterDecoration,
-		"--ub-label-decoration": attributes.labelDecoration,
+		"--ub-counter-label-decoration": attributes.labelDecoration,
+		"--ub-counter-label-font-style": labelFontStyle,
+		"--ub-counter-label-font-weight": labelFontWeight,
+		"--ub-counter-font-style": counterFontStyle,
+		"--ub-counter-font-weight": counterFontWeight,
 	};
 
 	return omitBy(styles, (value) => {

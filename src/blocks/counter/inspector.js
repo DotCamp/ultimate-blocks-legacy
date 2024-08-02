@@ -8,6 +8,7 @@ import {
 	SpacingControl,
 	ColorSettings,
 	TextDecorationControl,
+	FontWeightControl,
 } from "../components";
 
 function Inspector(props) {
@@ -86,6 +87,14 @@ function Inspector(props) {
 				<TextDecorationControl
 					attrKey={"labelDecoration"}
 					label={__("Label Decoration", "ultimate-blocks")}
+				/>
+				<FontWeightControl
+					attrKey={"counterFontAppearance"}
+					label={__("Counter Appearance", "ultimate-blocks")}
+				/>
+				<FontWeightControl
+					attrKey={"labelFontAppearance"}
+					label={__("Label Appearance", "ultimate-blocks")}
 				/>
 			</InspectorControls>
 			<InspectorControls group="styles">

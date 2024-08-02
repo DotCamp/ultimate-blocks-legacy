@@ -10,9 +10,13 @@
 	.ub_counter-number-wrapper {
 		font-size: var(--ub-counter-font-size);
 		text-decoration: var(--ub-counter-decoration);
+		font-style: var(--ub-counter-font-style);
+		font-weight: var(--ub-counter-font-weight);
 	}
 	.ub_counter-label-wrapper {
-		text-decoration: var(--ub-label-decoration);
+		text-decoration: var(--ub-counter-label-decoration);
+		font-style: var(--ub-counter-label-font-style);
+		font-weight: var(--ub-counter-label-font-weight);
 		font-size: var(--ub-counter-label-font-size);
 		color: var(--ub-counter-label-color);
 	}

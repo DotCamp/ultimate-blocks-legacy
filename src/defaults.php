@@ -3072,6 +3072,20 @@ $defaultValues = array(
 					'type' 	=> 'array',
 					'default' => array()
 				),
+				'counterFontAppearance' => array(
+					'type' 	=> 'array',
+					'default' => array(
+						'fontStyle'	=> '',
+						'fontWeight'	=> ''
+					)
+				),
+				'labelFontAppearance' => array(
+					'type' 	=> 'array',
+					'default' => array(
+						'fontStyle'	=> '',
+						'fontWeight'	=> ''
+					)
+				),
 			)
 		)
 );
