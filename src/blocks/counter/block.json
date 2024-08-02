@@ -38,6 +38,14 @@
 			"type": "string",
 			"default": ""
 		},
+		"counterLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"labelLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
 		"counterFontAppearance": {
 			"type": "object",
 			"default": {
