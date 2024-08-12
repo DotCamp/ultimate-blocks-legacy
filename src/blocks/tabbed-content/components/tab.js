@@ -62,10 +62,11 @@ registerBlockType(metadata.name, {
 		const blockProps = useBlockProps({
 			style: { display: isActive ? "block" : "none" },
 		});
-		// @deprecated
-		// if (parentID === "" || parentID !== blockParentId) {
-		// 	setAttributes({ parentID: blockParentId });
-		// }
+		useEffect(() => {
+			if (parentID === "" || parentID !== blockParentId) {
+				setAttributes({ parentID: blockParentId });
+			}
+		}, [parentID, blockParentId]);
 		const hasInnerBlocks = block?.innerBlocks?.length > 0;
 		return (
 			<div {...blockProps}>

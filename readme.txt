@@ -155,6 +155,8 @@ That's it. You're done!
 * NEW: Link to Divider Feature in Table of content block.
 * NEW: Add gap option in Star Rating block.
 * NEW: Add all typography options in counter block.
+* FIX: Accessibility issue in tabbed content block.
+* PRO: FIX: PHP warning from saved styles.
 
 = 3.2.1 =
 
