@@ -1,13 +1,6 @@
 {
-<<<<<<< HEAD
   "version": "3.2.2-dev",
   "mode": "development",
   "size": "7.78mb",
-  "date": "2024-08-12T11:52:45.953Z"
-=======
-  "version": "3.2.1",
-  "mode": "production",
-  "size": "7.12mb",
-  "date": "2024-07-23T04:56:39.092Z"
->>>>>>> master
+  "date": "2024-08-12T13:46:22.521Z"
 }
