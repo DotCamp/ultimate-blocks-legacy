@@ -2,7 +2,7 @@
 
 function ub_render_expand_portion_block($attributes, $content){
     extract($attributes);
-    return '<div class="ub-expand-portion ub-expand-' . $displayType .
+    return '<div class="ub-expand-portion ub-expand-' . esc_attr($displayType) .
         ($displayType === 'full' ? ' ub-hide' : '').
         (isset($className) ? ' ' . $className : '') . '">' .
         $content .
