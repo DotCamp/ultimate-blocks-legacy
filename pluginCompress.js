@@ -22,7 +22,7 @@ function getHrTime() {
  * @param {string} outputPath  path to the output zip file
  * @param {Array}  excludeList list of files/directories to be excluded from the zip file
  */
-function compress(outputPath, excludeList) {
+async function compress(outputPath, excludeList) {
 	const startTime = getHrTime();
 
 	const zip = archiver('zip', {
@@ -60,7 +60,7 @@ function compress(outputPath, excludeList) {
 		cwd: __dirname,
 		ignore: excludeList,
 	});
-	zip.finalize();
+	await zip.finalize();
 }
 
 /**
@@ -112,5 +112,7 @@ const zipOutputPath = path.join(outputPath, targetFileName);
 const ignoreList = generateIgnoreList();
 
 // compress plugin
-compress(zipOutputPath, ignoreList);
-writeFileInfo(outputPath, zipOutputPath);
+(async () => {
+	await compress(zipOutputPath, ignoreList);
+	writeFileInfo(outputPath, zipOutputPath);
+})();
