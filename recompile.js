@@ -38,6 +38,7 @@ const { readdir } = require("fs").promises;
 	writeFile(
 		`${__dirname}/dist/blocks.editor.build.css`,
 		newEditorStyle,
+		{ flag: "w+" },
 		err => {
 			if (err) throw err;
 		}
@@ -45,6 +46,7 @@ const { readdir } = require("fs").promises;
 	writeFile(
 		`${__dirname}/dist/blocks.style.build.css`,
 		newFrontendStyle,
+		{ flag: "w+" },
 		err => {
 			if (err) throw err;
 		}
