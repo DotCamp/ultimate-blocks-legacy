@@ -51,11 +51,16 @@ const AdvancedHeadingEdit = ({
 		lineHeight,
 	} = attributes;
 
-	const { block } = useSelect((select) => {
-		const { getBlock } = select("core/block-editor") || select("core/editor");
+	const { block, rootBlock } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
+		const rootBlock = getBlock(rootBlockClientId);
 
 		return {
-			block: getBlock(clientId),
+			block,
+			rootBlock,
 		};
 	});
 	/* set default values for the style attributes */
@@ -90,7 +95,9 @@ const AdvancedHeadingEdit = ({
 		}
 	}, [elementRef]);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
+		if (rootBlock && rootBlock.name !== "core/block") {
+			setAttributes({ blockID: block.clientId });
+		}
 	}, [block?.clientId]);
 
 	// Clean up the content from img and script tags.
