@@ -189,3 +189,35 @@ export const DEFAULT_ASPECT_RATIO_OPTIONS = [
 		value: "9/16",
 	},
 ];
+import { select } from "@wordpress/data";
+
+/**
+ *
+ * @param {string} clientId - Block Client id
+ * @param {string} slug - Parent block slug to find
+ * @returns
+ */
+export function getParentBlock(clientId, nameToFind) {
+	const block = select("core/block-editor").getBlock(clientId);
+
+	if (!block) return null; // No block selected or reached top-level block
+
+	// Check if the current block has a specific attribute (e.g., custom attribute) with the desired name
+	if (block.name === nameToFind) {
+		return block;
+	}
+
+	// Check if the current block is not required block
+	if (block) {
+		const parentBlockClientId = select(
+			"core/block-editor",
+		).getBlockRootClientId(block.clientId);
+
+		return parentBlockClientId
+			? getParentBlock(parentBlockClientId, nameToFind)
+			: null; // Recursively find the parent
+	}
+
+	// If there's no, this is the top-level block
+	return null;
+}
