@@ -1,5 +1,5 @@
 import icon from "./icon";
-
+import { isEmpty } from "lodash";
 import save from "./save";
 import { ReviewBody } from "./components";
 import {
@@ -1214,7 +1214,8 @@ function ReviewMain(props) {
 		(defaults, attr) => {
 			if (
 				unusedDefaults.includes(attr) &&
-				props.attributes[attr] !== schemaDefaults[attr]
+				props.attributes[attr] !== schemaDefaults[attr] &&
+				!isEmpty(props.attributes[attr])
 			) {
 				defaults[attr] = defaultAttributes[attr].default;
 			}
