@@ -29,6 +29,7 @@ import {
 	dashesToCamelcase,
 	splitArrayIntoChunks,
 	splitArray,
+	getParentBlock,
 } from "../../common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -131,20 +132,25 @@ function EditorComponent(props) {
 		getBlockParentsByBlockName,
 		getClientIdsOfDescendants,
 		getClientIdsWithDescendants,
+		rootBlockClientId,
 	} = useSelect((select) => {
 		const {
 			getBlock,
 			getBlockParentsByBlockName,
 			getClientIdsOfDescendants,
 			getClientIdsWithDescendants,
+			getBlockRootClientId,
 		} = select("core/block-editor");
+		const block = getBlock(props.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
 		return {
-			block: getBlock(props.clientId),
+			block,
 			getBlock,
 			getBlockParentsByBlockName,
 			getClientIdsOfDescendants,
 			getClientIdsWithDescendants,
+			rootBlockClientId,
 		};
 	});
 	const { replaceInnerBlocks, updateBlockAttributes } =
@@ -223,8 +229,11 @@ function EditorComponent(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 
 	function loadIconList() {
 		const iconList = Object.keys(allIcons).sort();

@@ -86,11 +86,13 @@ registerBlockType("ub/tabbed-content", {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getSelectedBlock } =
+			const { getBlock, getSelectedBlock, getBlockRootClientId } =
 				select("core/block-editor") || select("core/editor");
-
+			const block = getBlock(ownProps.clientId);
+			const rootBlockClientId = getBlockRootClientId(block.clientId);
 			return {
-				block: getBlock(ownProps.clientId),
+				block,
+				rootBlockClientId,
 				selectedBlock: getSelectedBlock(),
 			};
 		}),

@@ -5,6 +5,7 @@ import {
 	dashesToCamelcase,
 	splitArrayIntoChunks,
 	splitArray,
+	getParentBlock,
 } from "../../common";
 import { getStyles } from "./get-styles";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -906,23 +907,17 @@ export function EditorComponent(props) {
 			isBorderComponentChanged,
 		},
 	} = props;
-	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
-		useSelect((select) => {
-			const {
-				getBlock,
-				getBlockRootClientId,
-				getClientIdsWithDescendants,
-				getBlocks,
-			} = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
-			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				parentID: getBlockRootClientId(props.clientId),
-				getClientIdsWithDescendants,
-				getBlocks,
-			};
-		});
+		return {
+			block,
+			rootBlockClientId,
+		};
+	});
 	const [availableIcons, setAvailableIcons] = useState([]);
 	const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
 	const [enableLinkInput, setLinkInputStatus] = useState(false);
@@ -943,8 +938,11 @@ export function EditorComponent(props) {
 		}
 	}
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	if (!isSelected && enableLinkInput) {
 		setLinkInputStatus(false);
 	}

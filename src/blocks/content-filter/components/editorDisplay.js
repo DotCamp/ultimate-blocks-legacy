@@ -20,7 +20,7 @@ import {
 
 import { SpacingControl } from "../../components";
 import { useEffect } from "react";
-import { upgradeButtonLabel } from "../../../common";
+import { getParentBlock, upgradeButtonLabel } from "../../../common";
 import { getStyles } from "./get-styles";
 
 export function OldPanelContent(props) {
@@ -480,23 +480,17 @@ export function NewPanelContent(props) {
 		//,allowReset,resetButtonLabel
 	} = attributes;
 	const blockProps = useBlockProps();
-	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
-		useSelect((select) => {
-			const {
-				getBlock,
-				getBlockRootClientId,
-				getClientIdsWithDescendants,
-				getBlocks,
-			} = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(props.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
-			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				parentID: getBlockRootClientId(props.clientId),
-				getClientIdsWithDescendants,
-				getBlocks,
-			};
-		});
+		return {
+			block,
+			rootBlockClientId,
+		};
+	});
 	const newChildBlock = createBlock("ub/content-filter-entry-block", {
 		availableFilters: filterArray,
 		selectedFilters: filterArray.map((category) =>
@@ -544,8 +538,11 @@ export function NewPanelContent(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	const styles = getStyles(attributes);
 	return (
 		<div {...blockProps}>

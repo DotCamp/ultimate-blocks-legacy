@@ -14,7 +14,11 @@ import {
 	updateFrom,
 } from "./oldVersions";
 import { blockControls, inspectorControls, editorDisplay } from "./components";
-import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
+import {
+	mergeRichTextArray,
+	upgradeButtonLabel,
+	getParentBlock,
+} from "../../common";
 import { useState, useEffect } from "react";
 
 function OldStarRating(props) {
@@ -56,23 +60,17 @@ function StarRating(props) {
 		attributes: { starColor, blockID, textPosition, starAlign },
 		setAttributes,
 	} = props;
-	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
-		useSelect((select) => {
-			const {
-				getBlock,
-				getBlockRootClientId,
-				getClientIdsWithDescendants,
-				getBlocks,
-			} = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(props.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
-			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				parentID: getBlockRootClientId(props.clientId),
-				getClientIdsWithDescendants,
-				getBlocks,
-			};
-		});
+		return {
+			block,
+			rootBlockClientId,
+		};
+	});
 
 	useEffect(() => {
 		if (blockID === "") {
@@ -83,8 +81,11 @@ function StarRating(props) {
 		}
 	});
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	const blockProps = useBlockProps();
 	const styles = getStyles(props.attributes);
 	const alignClass =

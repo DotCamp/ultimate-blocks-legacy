@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getDescendantBlocks } from "../../common";
+import { getDescendantBlocks, getParentBlock } from "../../common";
 
 import { __ } from "@wordpress/i18n";
 import {
@@ -25,8 +25,7 @@ export function ExpandRoot(props) {
 		attributes,
 		setAttributes,
 		isSelected,
-		getBlock,
-		getClientIdsWithDescendants,
+		rootBlockClientId,
 	} = props;
 
 	const {
@@ -50,8 +49,11 @@ export function ExpandRoot(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 
 	const showPreviewText = __("show more");
 
@@ -96,7 +98,7 @@ export function ExpandRoot(props) {
 										options={[
 											{
 												label: __(
-													"Relative to first available fixed/sticky element"
+													"Relative to first available fixed/sticky element",
 												),
 												value: "auto",
 											},

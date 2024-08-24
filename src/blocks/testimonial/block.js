@@ -18,6 +18,7 @@ import { compose } from "@wordpress/compose";
 import { withDispatch, withSelect, useSelect } from "@wordpress/data";
 import { useBlockProps } from "@wordpress/block-editor";
 import { getStyles } from "./get-styles";
+import { getParentBlock } from "../../common";
 /**
  * Register: aa Gutenberg Block.
  *
@@ -208,30 +209,20 @@ registerBlockType(metadata.name, {
 			attributes: { blockID },
 			isSelected,
 			className,
+			clientId,
 		} = props;
 		const blockProps = useBlockProps();
 		const [editable, setEditable] = useState("");
 		const [activeAlignment, setActiveAlignment] = useState(false);
-		const {
-			block,
-			getBlock,
-			parentID,
-			getClientIdsWithDescendants,
-			getBlocks,
-		} = useSelect((select) => {
-			const {
-				getBlock,
-				getBlockRootClientId,
-				getClientIdsWithDescendants,
-				getBlocks,
-			} = select("core/block-editor") || select("core/editor");
+		const { block, rootBlockClientId } = useSelect((select) => {
+			const { getBlock, getBlockRootClientId } =
+				select("core/block-editor") || select("core/editor");
+			const block = getBlock(clientId);
+			const rootBlockClientId = getBlockRootClientId(block.clientId);
 
 			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				parentID: getBlockRootClientId(props.clientId),
-				getClientIdsWithDescendants,
-				getBlocks,
+				block,
+				rootBlockClientId,
 			};
 		});
 		useEffect(() => {
@@ -240,8 +231,11 @@ registerBlockType(metadata.name, {
 			}
 		}, []);
 		useEffect(() => {
-			props.setAttributes({ blockID: block.clientId });
-		}, [block.clientId]);
+			const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+			if (!rootBlock) {
+				props.setAttributes({ blockID: block.clientId });
+			}
+		}, [block?.clientId]);
 
 		function setState(state) {
 			if (state.hasOwnProperty("editable")) {

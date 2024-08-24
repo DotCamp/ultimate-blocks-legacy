@@ -14,6 +14,7 @@ import {
 } from "@wordpress/block-editor";
 import { TextControl, RangeControl, PanelBody } from "@wordpress/components";
 import { useSelect } from "@wordpress/data";
+import { getParentBlock } from "../../common";
 
 /**
  * Register: aa Gutenberg Block.
@@ -34,31 +35,28 @@ function ClickToTweet(props) {
 
 	const { ubTweet, ubVia, tweetFontSize, tweetColor, borderColor, blockID } =
 		attributes;
-	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
-		useSelect((select) => {
-			const {
-				getBlock,
-				getBlockRootClientId,
-				getClientIdsWithDescendants,
-				getBlocks,
-			} = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(props.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
-			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				parentID: getBlockRootClientId(props.clientId),
-				getClientIdsWithDescendants,
-				getBlocks,
-			};
-		});
+		return {
+			block,
+			rootBlockClientId,
+		};
+	});
 	useEffect(() => {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId }); //setting attributes via props.attributes is not working here
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	const blockProps = useBlockProps();
 	return (
 		<div {...blockProps}>

@@ -5,6 +5,7 @@ import icon, {
 	TickingCountdownIcon,
 } from "./icon";
 import Timer from "./components";
+import { getParentBlock } from "../../common";
 import { getStyles } from "./get-styles";
 import "./blocks-styles";
 import { ColorSettings, SpacingControl } from "../components/";
@@ -32,23 +33,17 @@ import { useSelect } from "@wordpress/data";
 
 function CountdownMain(props) {
 	const [forceUpdate, setForceUpdate] = useState(false);
-	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
-		useSelect((select) => {
-			const {
-				getBlock,
-				getBlockRootClientId,
-				getClientIdsWithDescendants,
-				getBlocks,
-			} = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(props.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
-			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				parentID: getBlockRootClientId(props.clientId),
-				getClientIdsWithDescendants,
-				getBlocks,
-			};
-		});
+		return {
+			block,
+			rootBlockClientId,
+		};
+	});
 	const {
 		isSelected,
 		setAttributes,
@@ -122,8 +117,11 @@ function CountdownMain(props) {
 		}
 	}, [blockClassName]);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 
 	const timeUnits = ["week", "day", "hour", "minute", "second"];
 

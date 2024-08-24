@@ -36,6 +36,7 @@ import {
 import { getStyles } from "./get-styles";
 import HalfCircle from "./HalfCircle";
 import metadata from "./block.json";
+import { getParentBlock } from "../../common";
 
 function ProgressBarMain(props) {
 	const {
@@ -61,8 +62,7 @@ function ProgressBarMain(props) {
 		isSelected,
 		setAttributes,
 		block,
-		getBlock,
-		getClientIdsWithDescendants,
+		rootBlockClientId,
 		className,
 	} = props;
 	useEffect(() => {
@@ -75,8 +75,11 @@ function ProgressBarMain(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 
 	const progressBarAttributes = {
 		percent: percentage,
@@ -338,13 +341,13 @@ registerBlockType(metadata.name, {
 		},
 	},
 	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
+		const { getBlock, getBlockRootClientId } =
 			select("core/block-editor") || select("core/editor");
-
+		const block = getBlock(ownProps.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
+			block,
+			rootBlockClientId,
 		};
 	})(ProgressBarMain),
 
