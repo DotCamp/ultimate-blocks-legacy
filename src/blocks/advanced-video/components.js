@@ -313,13 +313,6 @@ export function AdvancedVideoBlock(props) {
 	const [startTime_m, setStartTime_m] = useState(0);
 	const [startTime_s, setStartTime_s] = useState(0);
 
-	const [youtubeCache, setYoutubeCache] = useState({});
-	const [vimeoCache, setVimeoCache] = useState({});
-	const [dailyMotionCache, setDailyMotionCache] = useState({});
-	const [videoPressCache, setVideoPressCache] = useState({});
-
-	const [currentBorder, setCurrentBorder] = useState("");
-	const [currentCorner, setCurrentCorner] = useState("");
 	const [useShadow, setShadowStatus] = useState(false);
 	const { attributes, setAttributes, clientId } = props;
 	const blockProps = useBlockProps({
@@ -850,7 +843,7 @@ export function AdvancedVideoBlock(props) {
 		setVideoURLInput(url);
 	};
 	useEffect(() => {
-		if (!isEmpty(videoURLInput)) {
+		if (!isEmpty(videoURLInput) && videoURLInput !== props.attributes.url) {
 			checkVideoURLInput();
 
 			if (!isEmpty(videoSource) && videoSource !== "tiktok") {
