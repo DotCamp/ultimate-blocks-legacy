@@ -20,7 +20,7 @@ const addAttributes = (settings) => {
 					default: "selector { \n\n}",
 				},
 			},
-			{}
+			{},
 		);
 		if (isEmpty(settings?.attributes?.blockID)) {
 			settings.attributes = assign(
@@ -31,7 +31,7 @@ const addAttributes = (settings) => {
 						default: "",
 					},
 				},
-				{}
+				{},
 			);
 		}
 	}
@@ -44,9 +44,9 @@ const withAdvanceControls = createHigherOrderComponent((BlockEdit) => {
 		if (!isUbBlock(props.name)) {
 			return <BlockEdit {...props} />;
 		}
-		useEffect(() => {
-			props.setAttributes({ blockID: props.clientId });
-		}, [props.clientId]);
+		// useEffect(() => {
+		// 	props.setAttributes({ blockID: props.clientId });
+		// }, [props.clientId]);
 		return (
 			<>
 				<BlockEdit {...props} />
@@ -57,7 +57,7 @@ const withAdvanceControls = createHigherOrderComponent((BlockEdit) => {
 							dangerouslySetInnerHTML={{
 								__html: replaceSelector(
 									props.attributes.ubCustomCSS,
-									props.clientId
+									props.clientId,
 								),
 							}}
 						></style>
@@ -70,19 +70,19 @@ const withAdvanceControls = createHigherOrderComponent((BlockEdit) => {
 
 if (typeof ub_extensions !== "undefined") {
 	const responsiveControl = ub_extensions.find(
-		(extensions) => extensions.name === "custom-css"
+		(extensions) => extensions.name === "custom-css",
 	);
 	if (responsiveControl.active) {
 		addFilter(
 			"editor.BlockEdit",
 			"ultimate-blocks/with-advance-controls",
-			withAdvanceControls
+			withAdvanceControls,
 		);
 
 		addFilter(
 			"blocks.registerBlockType",
 			"ultimate-blocks/add-attributes",
-			addAttributes
+			addAttributes,
 		);
 	}
 }

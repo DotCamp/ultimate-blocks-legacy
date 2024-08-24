@@ -9,6 +9,7 @@ import {
 import { h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon } from "./icons";
 import { SpacingControl } from "../components";
 import { getStyles } from "./get-styles";
+import { getParentBlock } from "../../common";
 
 import { __ } from "@wordpress/i18n";
 import {
@@ -51,16 +52,15 @@ const AdvancedHeadingEdit = ({
 		lineHeight,
 	} = attributes;
 
-	const { block, rootBlock } = useSelect((select) => {
+	const { block, rootBlockClientId } = useSelect((select) => {
 		const { getBlock, getBlockRootClientId } =
 			select("core/block-editor") || select("core/editor");
 		const block = getBlock(clientId);
 		const rootBlockClientId = getBlockRootClientId(block.clientId);
-		const rootBlock = getBlock(rootBlockClientId);
 
 		return {
 			block,
-			rootBlock,
+			rootBlockClientId,
 		};
 	});
 	/* set default values for the style attributes */
@@ -95,7 +95,8 @@ const AdvancedHeadingEdit = ({
 		}
 	}, [elementRef]);
 	useEffect(() => {
-		if (rootBlock && rootBlock.name !== "core/block") {
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, [block?.clientId]);
