@@ -25,6 +25,7 @@ import {
 	ToggleControl,
 	SelectControl,
 } from "@wordpress/components";
+import { getParentBlock } from "../../common";
 
 export const blockControls = (props) => {
 	const { editable, attributes, setAttributes } = props;
@@ -43,7 +44,7 @@ export const blockControls = (props) => {
 								label={__(
 									(a !== "justify" ? "Align " : "") +
 										a[0].toUpperCase() +
-										a.slice(1)
+										a.slice(1),
 								)}
 								isActive={
 									(editable === "header" ? headAlign : contentAlign) === a
@@ -52,7 +53,7 @@ export const blockControls = (props) => {
 									setAttributes(
 										editable === "header"
 											? { headAlign: a }
-											: { contentAlign: a }
+											: { contentAlign: a },
 									)
 								}
 							/>
@@ -408,27 +409,28 @@ export function CallToAction(props) {
 		setAttributes,
 	} = props;
 
-	const { block, getBlock, getClientIdsWithDescendants } = useSelect(
-		(select) => {
-			const { getBlock, getClientIdsWithDescendants } =
-				select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(props.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
-			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				getClientIdsWithDescendants,
-			};
-		}
-	);
-
+		return {
+			block,
+			rootBlockClientId,
+		};
+	});
 	useEffect(() => {
 		if (blockID === "") {
 			setAttributes({ blockID: block.clientId });
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	const [editable, setEditable] = useState("");
 
 	return (

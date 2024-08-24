@@ -1,4 +1,5 @@
 const { __ } = wp.i18n;
+import { select } from "@wordpress/data";
 import { useRef, useEffect } from "react";
 import {
 	justifyLeft,
@@ -189,7 +190,6 @@ export const DEFAULT_ASPECT_RATIO_OPTIONS = [
 		value: "9/16",
 	},
 ];
-import { select } from "@wordpress/data";
 
 /**
  *

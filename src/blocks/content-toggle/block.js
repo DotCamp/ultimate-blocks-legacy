@@ -242,13 +242,16 @@ registerBlockType(metadata.name, {
 				getBlock,
 				getSelectedBlockClientId,
 				getClientIdsWithDescendants,
+				getBlockRootClientId,
 			} = select("core/block-editor") || select("core/editor");
-
+			const block = getBlock(ownProps.clientId);
+			const rootBlockClientId = getBlockRootClientId(block.clientId);
 			return {
 				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlockClientId(),
 				getBlock,
 				getClientIdsWithDescendants,
+				rootBlockClientId,
 			};
 		}),
 		withDispatch((dispatch) => {

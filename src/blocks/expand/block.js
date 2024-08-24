@@ -81,15 +81,18 @@ registerBlockType(metadata.name, {
 				getBlock,
 				getSelectedBlockClientId,
 				getClientIdsWithDescendants,
+				getBlockRootClientId,
 			} = select("core/block-editor") || select("core/editor");
 
 			const { clientId } = ownProps;
-
+			const block = getBlock(clientId);
+			const rootBlockClientId = getBlockRootClientId(block.clientId);
 			return {
 				block: getBlock(clientId),
 				getBlock,
 				getClientIdsWithDescendants,
 				getSelectedBlockClientId,
+				rootBlockClientId,
 			};
 		}),
 		withDispatch((dispatch) => {
@@ -181,11 +184,13 @@ registerBlockType(expandPortionMetadata.name, {
 				select("core/block-editor") || select("core/editor");
 
 			const { clientId } = ownProps;
-
+			const block = getBlock(clientId);
+			const rootBlockClientId = getBlockRootClientId(block.clientId);
 			return {
-				block: getBlock(clientId),
+				block,
 				getBlock,
 				getBlockRootClientId,
+				rootBlockClientId,
 			};
 		}),
 		withDispatch((dispatch) => ({

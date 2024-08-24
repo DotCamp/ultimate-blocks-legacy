@@ -34,7 +34,11 @@ import { useEffect } from "@wordpress/element";
 
 import { compose } from "@wordpress/compose";
 import metadata from "./block.json";
-import { upgradeButtonLabel, mergeRichTextArray } from "../../common";
+import {
+	upgradeButtonLabel,
+	mergeRichTextArray,
+	getParentBlock,
+} from "../../common";
 
 registerBlockType("ub/table-of-contents", {
 	title: __("Table of Contents"),
@@ -212,13 +216,14 @@ registerBlockType(metadata.name, {
 	example: {},
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
+			const { getBlock, getBlockRootClientId } =
 				select("core/block-editor") || select("core/editor");
+			const block = getBlock(ownProps.clientId);
+			const rootBlockClientId = getBlockRootClientId(block.clientId);
 
 			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
+				block,
+				rootBlockClientId,
 			};
 		}),
 	])(function (props) {
@@ -226,8 +231,7 @@ registerBlockType(metadata.name, {
 			isSelected,
 			block,
 			attributes: { blockID, showList },
-			getBlock,
-			getClientIdsWithDescendants,
+			rootBlockClientId,
 		} = props;
 
 		const [canRemoveItemFocus, toggleCanRemoveItemFocus] = useState(false);
@@ -236,8 +240,11 @@ registerBlockType(metadata.name, {
 			props.setAttributes({ blockID: block.clientId });
 		}
 		useEffect(() => {
-			props.setAttributes({ blockID: block.clientId });
-		}, [block.clientId]);
+			const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+			if (!rootBlock) {
+				props.setAttributes({ blockID: block.clientId });
+			}
+		}, [block?.clientId]);
 		const blockProps = useBlockProps({
 			className: `ub_table-of-contents${
 				showList ? "" : " ub_table-of-contents-collapsed"
