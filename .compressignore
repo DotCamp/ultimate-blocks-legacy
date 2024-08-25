@@ -1,3 +1,13 @@
+.idea/
+.vscode/
+node_modules/
+.node_modules/
+.DS_Store
+.idea
+.swp
+.parcel-cache
+.env
+.nyc_output/
 babel.config.js
 package.json
 package-lock.json
