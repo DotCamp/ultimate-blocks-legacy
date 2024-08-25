@@ -88,7 +88,7 @@ registerBlockType(metadata.name, {
 			const block = getBlock(clientId);
 			const rootBlockClientId = getBlockRootClientId(block.clientId);
 			return {
-				block: getBlock(clientId),
+				block,
 				getBlock,
 				getClientIdsWithDescendants,
 				getSelectedBlockClientId,

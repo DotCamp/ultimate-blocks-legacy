@@ -37,6 +37,8 @@ export function ExpandRoot(props) {
 		scrollTargetType,
 	} = attributes;
 	const blockProps = useBlockProps();
+	const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+
 	const selectedBlockID = useSelect((select) => {
 		return (
 			select("core/block-editor") || select("core/editor")
@@ -49,7 +51,6 @@ export function ExpandRoot(props) {
 		}
 	}, []);
 	useEffect(() => {
-		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
 		if (!rootBlock) {
 			setAttributes({ blockID: block.clientId });
 		}
@@ -67,7 +68,8 @@ export function ExpandRoot(props) {
 
 	if (
 		block.innerBlocks[1] &&
-		block.innerBlocks[1].attributes.isVisible !== fullVersionVisibility
+		block.innerBlocks[1].attributes.isVisible !== fullVersionVisibility &&
+		!rootBlock
 	) {
 		updateBlockAttributes(block.innerBlocks[1].clientId, {
 			isVisible: fullVersionVisibility,

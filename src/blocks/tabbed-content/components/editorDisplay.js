@@ -340,6 +340,7 @@ export const TabHolder = (props) => {
 		tabStyle,
 	} = attributes;
 	let block = null;
+	const rootBlock = getParentBlock(props.rootBlockClientId, "core/block");
 
 	for (const bl of window.ubTabbedContentBlocks) {
 		if (bl.id === attributes.id) {
@@ -355,7 +356,9 @@ export const TabHolder = (props) => {
 			SortableList: null,
 		};
 		window.ubTabbedContentBlocks.push(block);
-		setAttributes({ id: block.id });
+		if (!rootBlock) {
+			setAttributes({ id: block.id });
+		}
 	}
 
 	if (!attributes.tabsTitle) {
@@ -533,7 +536,6 @@ export const TabHolder = (props) => {
 		setAttributes({ blockID: props.block.clientId });
 	}
 	useEffect(() => {
-		const rootBlock = getParentBlock(props.rootBlockClientId, "core/block");
 		if (!rootBlock) {
 			setAttributes({ blockID: props.block.clientId });
 		}
