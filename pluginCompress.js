@@ -70,14 +70,12 @@ async function compress(outputPath, excludeList) {
  */
 const generateIgnoreList = () => {
 	// read both .gitignore and .compressignore to exclude files
-	const gitignore = fs.readFileSync('.gitignore').toString().split('\n');
 	const compressIgnore = fs
 		.readFileSync('.compressignore')
 		.toString()
 		.split('\n');
 
 	return compressIgnore
-		.concat(gitignore)
 		.filter((val) => val !== '')
 		.map((ignorePath) => {
 			return ignorePath.endsWith('/') ? ignorePath + '**' : ignorePath;
