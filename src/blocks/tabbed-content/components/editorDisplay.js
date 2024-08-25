@@ -507,7 +507,7 @@ export const TabHolder = (props) => {
 
 	const newArrangement = tabs.map((tab) => tab.attributes.index);
 
-	if (!newArrangement.every((i, j) => i === oldArrangement[j])) {
+	if (!newArrangement.every((i, j) => i === oldArrangement[j]) && !rootBlock) {
 		tabs.forEach((tab, i) =>
 			updateBlockAttributes(tab.clientId, {
 				index: i,
