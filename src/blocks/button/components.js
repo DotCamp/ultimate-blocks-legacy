@@ -929,6 +929,7 @@ export function EditorComponent(props) {
 	const [hasApiAccess, setApiStatus] = useState(false);
 	const [selectionTime, setSelectionTime] = useState(-1);
 	const [currentCorner, setCurrentCorner] = useState("all");
+	const rootBlock = getParentBlock(rootBlockClientId, "core/block");
 
 	if (blockID === "") {
 		setAttributes({ blockID: block.clientId, align: "center" });
@@ -938,7 +939,6 @@ export function EditorComponent(props) {
 		}
 	}
 	useEffect(() => {
-		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
 		if (!rootBlock) {
 			setAttributes({ blockID: block.clientId });
 		}
@@ -1201,94 +1201,100 @@ export function EditorComponent(props) {
 	}
 
 	useEffect(() => {
-		setAvailableIcons(
-			Object.keys(allIcons)
-				.sort()
-				.map((name) => allIcons[name]),
-		);
+		if (!rootBlock) {
+			setAvailableIcons(
+				Object.keys(allIcons)
+					.sort()
+					.map((name) => allIcons[name]),
+			);
 
-		loadIconList();
+			loadIconList();
 
-		if (buttons.length === 0) {
-			setAttributes({
-				buttons: [
-					Object.assign({}, defaultButtonProps, {
-						buttonText,
-						url,
-						size,
-						buttonColor,
-						buttonHoverColor,
-						buttonTextColor,
-						buttonTextHoverColor,
-						buttonRounded,
-						chosenIcon,
-						iconPosition,
-						buttonIsTransparent,
-						addNofollow,
-						openInNewTab,
-						buttonWidth,
-					}),
-				],
-			});
-		} else {
-			let newButtons = JSON.parse(JSON.stringify(buttons));
-			let cornersNotSet = false;
+			if (buttons.length === 0) {
+				setAttributes({
+					buttons: [
+						Object.assign({}, defaultButtonProps, {
+							buttonText,
+							url,
+							size,
+							buttonColor,
+							buttonHoverColor,
+							buttonTextColor,
+							buttonTextHoverColor,
+							buttonRounded,
+							chosenIcon,
+							iconPosition,
+							buttonIsTransparent,
+							addNofollow,
+							openInNewTab,
+							buttonWidth,
+						}),
+					],
+				});
+			} else {
+				let newButtons = JSON.parse(JSON.stringify(buttons));
+				let cornersNotSet = false;
 
-			newButtons.forEach((b) => {
-				if (!b.hasOwnProperty("topLeftRadius")) {
-					if (!cornersNotSet) {
-						cornersNotSet = true;
+				newButtons.forEach((b) => {
+					if (!b.hasOwnProperty("topLeftRadius")) {
+						if (!cornersNotSet) {
+							cornersNotSet = true;
+						}
+
+						b.topLeftRadius = b.buttonRadius;
+						b.topRightRadius = b.buttonRadius;
+						b.bottomLeftRadius = b.buttonRadius;
+						b.bottomRightRadius = b.buttonRadius;
+
+						b.topLeftRadiusUnit = b.buttonRadiusUnit;
+						b.topRightRadiusUnit = b.buttonRadiusUnit;
+						b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
+						b.bottomRightRadiusUnit = b.buttonRadiusUnit;
+
+						b.iconSize = 0;
+						b.iconUnit = "px";
 					}
+				});
 
-					b.topLeftRadius = b.buttonRadius;
-					b.topRightRadius = b.buttonRadius;
-					b.bottomLeftRadius = b.buttonRadius;
-					b.bottomRightRadius = b.buttonRadius;
-
-					b.topLeftRadiusUnit = b.buttonRadiusUnit;
-					b.topRightRadiusUnit = b.buttonRadiusUnit;
-					b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
-					b.bottomRightRadiusUnit = b.buttonRadiusUnit;
-
-					b.iconSize = 0;
-					b.iconUnit = "px";
+				if (cornersNotSet) {
+					setAttributes({ buttons: JSON.parse(JSON.stringify(newButtons)) });
 				}
-			});
-
-			if (cornersNotSet) {
-				setAttributes({ buttons: JSON.parse(JSON.stringify(newButtons)) });
 			}
 		}
 	}, []);
 	useEffect(() => {
-		if (!isBorderComponentChanged && buttons.length > 0) {
-			const newButtons = buttons.map((b) => {
-				b.topLeftRadiusUnit = b.buttonRadiusUnit;
-				b.topRightRadiusUnit = b.buttonRadiusUnit;
-				b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
-				b.bottomRightRadiusUnit = b.buttonRadiusUnit;
-				return {
-					...b,
-					borderRadius: {
-						topLeft: b.topLeftRadius + b.topLeftRadiusUnit,
-						topRight: b.topRightRadius + b.topRightRadiusUnit,
-						bottomLeft: b.bottomLeftRadius + b.bottomLeftRadiusUnit,
-						bottomRight: b.bottomRightRadius + b.bottomRightRadiusUnit,
-					},
-				};
-			});
-			setAttributes({
-				isBorderComponentChanged: true,
-				buttons: newButtons,
-			});
+		if (!rootBlock) {
+			if (!isBorderComponentChanged && buttons.length > 0) {
+				const newButtons = buttons.map((b) => {
+					b.topLeftRadiusUnit = b.buttonRadiusUnit;
+					b.topRightRadiusUnit = b.buttonRadiusUnit;
+					b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
+					b.bottomRightRadiusUnit = b.buttonRadiusUnit;
+					return {
+						...b,
+						borderRadius: {
+							topLeft: b.topLeftRadius + b.topLeftRadiusUnit,
+							topRight: b.topRightRadius + b.topRightRadiusUnit,
+							bottomLeft: b.bottomLeftRadius + b.bottomLeftRadiusUnit,
+							bottomRight: b.bottomRightRadius + b.bottomRightRadiusUnit,
+						},
+					};
+				});
+				setAttributes({
+					isBorderComponentChanged: true,
+					buttons: newButtons,
+				});
+			}
 		}
 	}, []);
 	useEffect(() => {
-		if (hasApiAccess) {
-			if (isSelected) {
-				loadIconList();
-			} else {
-				updateIconList();
+		if (!rootBlock) {
+			if (hasApiAccess) {
+				if (isSelected) {
+					loadIconList();
+				} else {
+					updateIconList();
+				}
 			}
 		}
 	}, [isSelected]);
@@ -1301,7 +1307,7 @@ export function EditorComponent(props) {
 
 	return (
 		<>
-			{isSelected && (
+			{isSelected && !rootBlock && (
 				<>
 					<BlockControls group="block">
 						<JustifyContentControl
@@ -1322,7 +1328,7 @@ export function EditorComponent(props) {
 					</BlockControls>
 				</>
 			)}
-			{
+			{!rootBlock && (
 				<>
 					<InspectorControls group="settings">
 						<PanelBody title={__("Layout", "ultimate-blocks")}>
@@ -1750,7 +1756,7 @@ export function EditorComponent(props) {
 						</InspectorControls>
 					)}
 				</>
-			}
+			)}
 			{
 				<div {...blockProps}>
 					{buttons.map((b, i) => (
