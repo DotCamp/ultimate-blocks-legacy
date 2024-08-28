@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { convertFromSeconds } from "../../common";
+import { convertFromSeconds, getParentBlock } from "../../common";
 import { SpacingControl } from "../components";
 import { getStyles } from "./get-styles";
 import { useSelect } from "@wordpress/data";
@@ -878,23 +878,17 @@ function HowToSection(props) {
 export function EditorComponent(props) {
 	const [videoURLInput, setVideoURLInput] = useState("");
 	const [currentStep, setCurrentStep] = useState("");
-	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
-		useSelect((select) => {
-			const {
-				getBlock,
-				getBlockRootClientId,
-				getClientIdsWithDescendants,
-				getBlocks,
-			} = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(props.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
-			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				parentID: getBlockRootClientId(props.clientId),
-				getClientIdsWithDescendants,
-				getBlocks,
-			};
-		});
+		return {
+			block,
+			rootBlockClientId,
+		};
+	});
 	useEffect(() => {
 		const {
 			attributes: { videoURL, section },
@@ -1015,8 +1009,11 @@ export function EditorComponent(props) {
 		setAttributes({ blockID: block.clientId });
 	}
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 
 	const checkVideoURLInput = () => {
 		if (/^http(s)?:\/\//g.test(videoURLInput)) {

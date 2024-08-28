@@ -35,6 +35,7 @@ import {
 
 import { withSelect } from "@wordpress/data";
 import metadata from "./block.json";
+import { getParentBlock } from "../../common";
 const attributes = {
 	blockID: {
 		type: "string",
@@ -173,8 +174,7 @@ function ImageSliderMain(props) {
 		setAttributes,
 		isSelected,
 		block,
-		getBlock,
-		getClientIdsWithDescendants,
+		rootBlockClientId,
 	} = props;
 
 	//maybe use useEffect for some of the values here?
@@ -196,8 +196,11 @@ function ImageSliderMain(props) {
 		setAttributes({ usePagination: false });
 	}
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	if (paginationType === "") {
 		setAttributes({ paginationType: "bullets" });
 	}
@@ -683,13 +686,13 @@ registerBlockType(metadata.name, {
 	example: {},
 	attributes: metadata.attributes,
 	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
+		const { getBlock, getBlockRootClientId } =
 			select("core/block-editor") || select("core/editor");
-
+		const block = getBlock(ownProps.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 		return {
-			block: getBlock(ownProps.clientId),
-			getBlock,
-			getClientIdsWithDescendants,
+			block,
+			rootBlockClientId,
 		};
 	})(ImageSliderMain),
 	save() {

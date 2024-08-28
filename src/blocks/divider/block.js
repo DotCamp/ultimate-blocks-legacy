@@ -29,7 +29,7 @@ import {
 import { getStyles } from "./get-styles";
 import { CustomToggleGroupControl, SpacingControl } from "../components";
 import { withSelect } from "@wordpress/data";
-import { AVAILABLE_JUSTIFICATIONS } from "../../common";
+import { AVAILABLE_JUSTIFICATIONS, getParentBlock } from "../../common";
 
 const attributes = {
 	blockID: {
@@ -96,6 +96,7 @@ function DividerBlock(props) {
 		block,
 		getBlock,
 		getClientIdsWithDescendants,
+		rootBlockClientId,
 	} = props;
 	const blockProps = useBlockProps({
 		className: `ub-divider-orientation-${orientation}`,
@@ -109,8 +110,11 @@ function DividerBlock(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	const styles = getStyles(props.attributes);
 	const borderName = orientation === "horizontal" ? "borderTop" : "borderLeft";
 	const dividerStyle =
@@ -304,13 +308,15 @@ registerBlockType(metadata.name, {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
+		const { getBlock, getClientIdsWithDescendants, getBlockRootClientId } =
 			select("core/block-editor") || select("core/editor");
-
+		const block = getBlock(ownProps.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 		return {
-			block: getBlock(ownProps.clientId),
+			block,
 			getBlock,
 			getClientIdsWithDescendants,
+			rootBlockClientId,
 		};
 	})(DividerBlock),
 

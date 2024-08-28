@@ -4,6 +4,7 @@ import {
 	upgradeButtonLabel,
 	getDescendantBlocks,
 	objectsMatch,
+	getParentBlock,
 } from "../../../common";
 import icons from "../icons/icons";
 import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
@@ -232,6 +233,7 @@ export function PanelContent(props) {
 		block,
 		getClientIdsWithDescendants,
 		getBlock,
+		rootBlockClientId,
 	} = props;
 
 	const newArrangement = panels.map((panel) => panel.attributes.index);
@@ -292,7 +294,10 @@ export function PanelContent(props) {
 		);
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block?.clientId });
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
 	}, [block?.clientId]);
 
 	const [oldArrangement, setOldArrangement] = useState([]);

@@ -9,6 +9,7 @@ import {
 import { h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon } from "./icons";
 import { SpacingControl } from "../components";
 import { getStyles } from "./get-styles";
+import { getParentBlock } from "../../common";
 
 import { __ } from "@wordpress/i18n";
 import {
@@ -51,11 +52,15 @@ const AdvancedHeadingEdit = ({
 		lineHeight,
 	} = attributes;
 
-	const { block } = useSelect((select) => {
-		const { getBlock } = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
 		return {
-			block: getBlock(clientId),
+			block,
+			rootBlockClientId,
 		};
 	});
 	/* set default values for the style attributes */
@@ -90,7 +95,10 @@ const AdvancedHeadingEdit = ({
 		}
 	}, [elementRef]);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
 	}, [block?.clientId]);
 
 	// Clean up the content from img and script tags.

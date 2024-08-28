@@ -28,6 +28,7 @@ import Inspector from "./inspector";
 
 import { useEffect, useState } from "react";
 import { getStyles } from "./get-styles";
+import { getParentBlock } from "../../common";
 
 // variables
 const iconSizes = {
@@ -199,6 +200,7 @@ function SocialShareMain(props) {
 		block,
 		getBlock,
 		getClientIdsWithDescendants,
+		rootBlockClientId,
 	} = props;
 	const blockProps = useBlockProps();
 	const {
@@ -244,8 +246,11 @@ function SocialShareMain(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	const styles = getStyles(attributes);
 	return (
 		<div {...blockProps}>
@@ -303,13 +308,15 @@ registerBlockType(metadata.name, {
 	icon: icon,
 	example: {},
 	edit: withSelect((select, ownProps) => {
-		const { getBlock, getClientIdsWithDescendants } =
+		const { getBlock, getClientIdsWithDescendants, getBlockRootClientId } =
 			select("core/block-editor") || select("core/editor");
-
+		const block = getBlock(ownProps.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 		return {
-			block: getBlock(ownProps.clientId),
+			block,
 			getBlock,
 			getClientIdsWithDescendants,
+			rootBlockClientId,
 		};
 	})(SocialShareMain),
 

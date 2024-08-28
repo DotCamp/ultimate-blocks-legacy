@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getDescendantBlocks } from "../../common";
+import { getDescendantBlocks, getParentBlock } from "../../common";
 
 import { __ } from "@wordpress/i18n";
 import {
@@ -25,8 +25,7 @@ export function ExpandRoot(props) {
 		attributes,
 		setAttributes,
 		isSelected,
-		getBlock,
-		getClientIdsWithDescendants,
+		rootBlockClientId,
 	} = props;
 
 	const {
@@ -38,6 +37,8 @@ export function ExpandRoot(props) {
 		scrollTargetType,
 	} = attributes;
 	const blockProps = useBlockProps();
+	const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+
 	const selectedBlockID = useSelect((select) => {
 		return (
 			select("core/block-editor") || select("core/editor")
@@ -50,8 +51,10 @@ export function ExpandRoot(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 
 	const showPreviewText = __("show more");
 
@@ -65,7 +68,8 @@ export function ExpandRoot(props) {
 
 	if (
 		block.innerBlocks[1] &&
-		block.innerBlocks[1].attributes.isVisible !== fullVersionVisibility
+		block.innerBlocks[1].attributes.isVisible !== fullVersionVisibility &&
+		!rootBlock
 	) {
 		updateBlockAttributes(block.innerBlocks[1].clientId, {
 			isVisible: fullVersionVisibility,
@@ -96,7 +100,7 @@ export function ExpandRoot(props) {
 										options={[
 											{
 												label: __(
-													"Relative to first available fixed/sticky element"
+													"Relative to first available fixed/sticky element",
 												),
 												value: "auto",
 											},

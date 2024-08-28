@@ -6,7 +6,11 @@ import {
 } from "react-sortable-hoc";
 import Inspector from "./inspector";
 import { Component, useEffect, useState } from "react";
-import { upgradeButtonLabel, mergeRichTextArray } from "../../../common";
+import {
+	upgradeButtonLabel,
+	mergeRichTextArray,
+	getParentBlock,
+} from "../../../common";
 
 import { __ } from "@wordpress/i18n";
 import { createBlock } from "@wordpress/blocks";
@@ -138,7 +142,7 @@ export class OldTabHolder extends Component {
 							/>
 						</div>
 					</div>
-				)
+				),
 			);
 		}
 
@@ -173,12 +177,12 @@ export class OldTabHolder extends Component {
 							<span className="dashicons dashicons-plus-alt" />
 						</div>
 					</div>
-				)
+				),
 			);
 		}
 
 		const newArrangement = JSON.stringify(
-			tabs.map((tab) => tab.attributes.index)
+			tabs.map((tab) => tab.attributes.index),
 		);
 
 		if (newArrangement !== oldArrangement) {
@@ -186,7 +190,7 @@ export class OldTabHolder extends Component {
 				updateBlockAttributes(tab.clientId, {
 					index: i,
 					isActive: attributes.activeTab === i,
-				})
+				}),
 			);
 			this.setState({ oldArrangement: newArrangement });
 		}
@@ -225,7 +229,7 @@ export class OldTabHolder extends Component {
 									tabsTitle: tabsTitle
 										.map((title) => title.content)
 										.map((title) =>
-											Array.isArray(title) ? mergeRichTextArray(title) : title
+											Array.isArray(title) ? mergeRichTextArray(title) : title,
 										),
 								},
 								this.props.block.innerBlocks.map((innerBlock, i) =>
@@ -235,10 +239,10 @@ export class OldTabHolder extends Component {
 											index: i,
 											isActive: innerBlock.attributes.isActive,
 										},
-										innerBlock.innerBlocks
-									)
-								)
-							)
+										innerBlock.innerBlocks,
+									),
+								),
+							),
 						);
 					}}
 				>
@@ -261,7 +265,7 @@ export class OldTabHolder extends Component {
 									.clientId,
 								this.props.block.clientId,
 								this.props.block.clientId,
-								newIndex
+								newIndex,
 							);
 
 							showControls("tab-title", oldIndex);
@@ -280,7 +284,7 @@ export class OldTabHolder extends Component {
 							});
 
 							removeBlock(
-								tabs.filter((tab) => tab.attributes.index === i)[0].clientId
+								tabs.filter((tab) => tab.attributes.index === i)[0].clientId,
 							);
 
 							setAttributes({ activeTab: 0 });
@@ -336,6 +340,7 @@ export const TabHolder = (props) => {
 		tabStyle,
 	} = attributes;
 	let block = null;
+	const rootBlock = getParentBlock(props.rootBlockClientId, "core/block");
 
 	for (const bl of window.ubTabbedContentBlocks) {
 		if (bl.id === attributes.id) {
@@ -351,7 +356,9 @@ export const TabHolder = (props) => {
 			SortableList: null,
 		};
 		window.ubTabbedContentBlocks.push(block);
-		setAttributes({ id: block.id });
+		if (!rootBlock) {
+			setAttributes({ id: block.id });
+		}
 	}
 
 	if (!attributes.tabsTitle) {
@@ -406,8 +413,8 @@ export const TabHolder = (props) => {
 							propz.attributes.tabStyle === "underline"
 								? "inherit"
 								: propz.attributes.activeTab === i
-								? propz.attributes.theme
-								: propz.attributes.normalColor || "inherit",
+									? propz.attributes.theme
+									: propz.attributes.normalColor || "inherit",
 						color:
 							propz.attributes.activeTab === i
 								? propz.attributes.titleColor || "inherit"
@@ -444,7 +451,7 @@ export const TabHolder = (props) => {
 						/>
 					</div>
 				</div>
-			)
+			),
 		);
 	}
 
@@ -468,7 +475,7 @@ export const TabHolder = (props) => {
 								? "center"
 								: `flex-${
 										propz.attributes.tabsAlignment === "left" ? "start" : "end"
-								  }`,
+									}`,
 					}}
 					useWindowAsScrollContainer={true}
 				>
@@ -494,18 +501,18 @@ export const TabHolder = (props) => {
 						<span className="dashicons dashicons-plus-alt" />
 					</div>
 				</div>
-			)
+			),
 		);
 	}
 
 	const newArrangement = tabs.map((tab) => tab.attributes.index);
 
-	if (!newArrangement.every((i, j) => i === oldArrangement[j])) {
+	if (!newArrangement.every((i, j) => i === oldArrangement[j]) && !rootBlock) {
 		tabs.forEach((tab, i) =>
 			updateBlockAttributes(tab.clientId, {
 				index: i,
 				isActive: attributes.activeTab === i,
-			})
+			}),
 		);
 		setState({ oldArrangement: newArrangement });
 	}
@@ -529,8 +536,10 @@ export const TabHolder = (props) => {
 		setAttributes({ blockID: props.block.clientId });
 	}
 	useEffect(() => {
-		setAttributes({ blockID: props.block.clientId });
-	}, [props.block.clientId]);
+		if (!rootBlock) {
+			setAttributes({ blockID: props.block.clientId });
+		}
+	}, [props.block?.clientId]);
 	useEffect(() => {
 		const { attributes, setAttributes } = props;
 		const { tabsTitle, tabsTitleAlignment, tabsAnchor, useAnchors } =
@@ -545,7 +554,7 @@ export const TabHolder = (props) => {
 		if (useAnchors && tabsTitle.length > tabsAnchor.length) {
 			setAttributes({
 				tabsAnchor: tabsAnchor.concat(
-					Array(tabsTitle.length - tabsAnchor.length).fill("")
+					Array(tabsTitle.length - tabsAnchor.length).fill(""),
 				),
 			});
 		}
@@ -617,7 +626,7 @@ export const TabHolder = (props) => {
 									.clientId,
 								props.block.clientId,
 								props.block.clientId,
-								newIndex
+								newIndex,
 							);
 
 							setAttributes({
@@ -648,7 +657,7 @@ export const TabHolder = (props) => {
 							});
 
 							removeBlock(
-								tabs.filter((tab) => tab.attributes.index === i)[0].clientId
+								tabs.filter((tab) => tab.attributes.index === i)[0].clientId,
 							);
 
 							showControls("tab-title", 0);

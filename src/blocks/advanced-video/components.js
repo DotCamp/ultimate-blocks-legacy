@@ -1,4 +1,8 @@
-import { DEFAULT_ASPECT_RATIO_OPTIONS, convertFromSeconds } from "../../common";
+import {
+	DEFAULT_ASPECT_RATIO_OPTIONS,
+	convertFromSeconds,
+	getParentBlock,
+} from "../../common";
 import { get, isEmpty } from "lodash";
 import { useState, useEffect } from "react";
 import {
@@ -309,23 +313,20 @@ export function AdvancedVideoBlock(props) {
 	const [startTime_m, setStartTime_m] = useState(0);
 	const [startTime_s, setStartTime_s] = useState(0);
 
-	const [youtubeCache, setYoutubeCache] = useState({});
-	const [vimeoCache, setVimeoCache] = useState({});
-	const [dailyMotionCache, setDailyMotionCache] = useState({});
-	const [videoPressCache, setVideoPressCache] = useState({});
-
-	const [currentBorder, setCurrentBorder] = useState("");
-	const [currentCorner, setCurrentCorner] = useState("");
 	const [useShadow, setShadowStatus] = useState(false);
-	const { attributes, setAttributes } = props;
+	const { attributes, setAttributes, clientId } = props;
 	const blockProps = useBlockProps({
 		style: getStyles(attributes),
 	});
-	const { block } = useSelect((select) => {
-		const { getBlock } = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
 		return {
-			block: getBlock(props.clientId),
+			block,
+			rootBlockClientId,
 		};
 	});
 	const {
@@ -454,9 +455,11 @@ export function AdvancedVideoBlock(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
-
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	const checkVideoURLInput = () => {
 		let videoURL = videoURLInput.trim();
 
@@ -840,7 +843,7 @@ export function AdvancedVideoBlock(props) {
 		setVideoURLInput(url);
 	};
 	useEffect(() => {
-		if (!isEmpty(videoURLInput)) {
+		if (!isEmpty(videoURLInput) && videoURLInput !== props.attributes.url) {
 			checkVideoURLInput();
 
 			if (!isEmpty(videoSource) && videoSource !== "tiktok") {

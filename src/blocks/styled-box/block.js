@@ -3,6 +3,7 @@ import { __ } from "@wordpress/i18n";
 import { registerBlockType, createBlock } from "@wordpress/blocks";
 import { SpacingControl } from "../components";
 import { getStyles } from "./get-styles";
+import { getParentBlock } from "../../common";
 import {
 	RichText,
 	BlockControls,
@@ -54,23 +55,17 @@ import numberBoxColumnMetaData from "./styled-box-numbered-box-column/block.json
 
 function StyledBox(props) {
 	const [editable, setEditable] = useState("");
-	const { block, getBlock, parentID, getClientIdsWithDescendants, getBlocks } =
-		useSelect((select) => {
-			const {
-				getBlock,
-				getBlockRootClientId,
-				getClientIdsWithDescendants,
-				getBlocks,
-			} = select("core/block-editor") || select("core/editor");
+	const { block, rootBlockClientId } = useSelect((select) => {
+		const { getBlock, getBlockRootClientId } =
+			select("core/block-editor") || select("core/editor");
+		const block = getBlock(props.clientId);
+		const rootBlockClientId = getBlockRootClientId(block.clientId);
 
-			return {
-				getBlock,
-				block: getBlock(props.clientId),
-				parentID: getBlockRootClientId(props.clientId),
-				getClientIdsWithDescendants,
-				getBlocks,
-			};
-		});
+		return {
+			block,
+			rootBlockClientId,
+		};
+	});
 	const {
 		insertBlock,
 		insertBlocks,
@@ -119,8 +114,11 @@ function StyledBox(props) {
 		}
 	}, []);
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 	const newValue = (arr, newLength, val = "") =>
 		newLength > arr.length
 			? [...arr, ...Array(newLength - arr.length).fill(val)]

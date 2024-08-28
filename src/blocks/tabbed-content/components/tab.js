@@ -1,6 +1,7 @@
 import icon from "../icons/icon";
 import { useEffect } from "react";
 import metadata from "./block.json";
+import { getParentBlock } from "../../../common";
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
@@ -62,8 +63,10 @@ registerBlockType(metadata.name, {
 		const blockProps = useBlockProps({
 			style: { display: isActive ? "block" : "none" },
 		});
+		const rootBlock = getParentBlock(props.clientId, "core/block");
+
 		useEffect(() => {
-			if (parentID === "" || parentID !== blockParentId) {
+			if (!rootBlock && (parentID === "" || parentID !== blockParentId)) {
 				setAttributes({ parentID: blockParentId });
 			}
 		}, [parentID, blockParentId]);

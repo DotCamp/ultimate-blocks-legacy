@@ -1,5 +1,5 @@
 import icon from "./icon";
-
+import { isEmpty } from "lodash";
 import save from "./save";
 import { ReviewBody } from "./components";
 import {
@@ -8,7 +8,7 @@ import {
 	version_1_1_5,
 	updateFrom,
 } from "./oldVersions";
-import { removeFromArray } from "../../common";
+import { removeFromArray, getParentBlock } from "../../common";
 import { useEffect, useState } from "react";
 import registerPluginBlock from "$Inc/registerPluginBlock";
 import { CustomFontSizePicker, SpacingControl } from "../components";
@@ -457,8 +457,7 @@ function ReviewMain(props) {
 		setAttributes,
 		isSelected,
 		block,
-		getBlock,
-		getClientIdsWithDescendants,
+		rootBlockClientId,
 	} = props;
 
 	const blockProps = useBlockProps();
@@ -487,8 +486,11 @@ function ReviewMain(props) {
 		}
 	};
 	useEffect(() => {
-		setAttributes({ blockID: block.clientId });
-	}, [block.clientId]);
+		const rootBlock = getParentBlock(rootBlockClientId, "core/block");
+		if (!rootBlock) {
+			setAttributes({ blockID: block.clientId });
+		}
+	}, [block?.clientId]);
 
 	useEffect(() => {
 		const initialAttributes = {};
@@ -1212,7 +1214,8 @@ function ReviewMain(props) {
 		(defaults, attr) => {
 			if (
 				unusedDefaults.includes(attr) &&
-				props.attributes[attr] !== schemaDefaults[attr]
+				props.attributes[attr] !== schemaDefaults[attr] &&
+				!isEmpty(props.attributes[attr])
 			) {
 				defaults[attr] = defaultAttributes[attr].default;
 			}
@@ -1866,13 +1869,14 @@ registerPluginBlock(metadata.name, {
 	attributes: metadata.attributes,
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
+			const { getBlock, getBlockRootClientId } =
 				select("core/block-editor") || select("core/editor");
+			const block = getBlock(ownProps.clientId);
+			const rootBlockClientId = getBlockRootClientId(block.clientId);
 
 			return {
-				block: getBlock(ownProps.clientId),
-				getBlock,
-				getClientIdsWithDescendants,
+				block,
+				rootBlockClientId,
 			};
 		}),
 	])(ReviewMain),
