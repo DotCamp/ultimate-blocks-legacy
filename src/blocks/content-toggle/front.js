@@ -3,39 +3,37 @@ const convertToPixels = (amount, unit) =>
 
 const togglePanel = (target) => {
 	let topPadding = 0,
-		topPaddingUnit = "",
-		bottomPadding = 0,
-		bottomPaddingUnit = "";
+		bottomPadding = 0;
 
 	const indicator = target.querySelector(
 		".wp-block-ub-content-toggle-accordion-state-indicator",
 	);
 	const panelContent = target.nextElementSibling;
-	const toggleContainer = target.parentElement.parentElement;
+	const toggleContainer = target.closest(".wp-block-ub-content-toggle");
 
 	if (panelContent.classList.contains("ub-hide")) {
-		const { paddingTop, paddingBottom } = getComputedStyle(panelContent);
-		const topPaddingMatch = /[^\d.]/g.exec(paddingTop);
-		const bottomPaddingMatch = /[^\d.]/g.exec(paddingBottom);
+		const computedStyles = getComputedStyle(panelContent);
+		const topPaddingUnit = computedStyles.paddingTop.match(/[^\d.]+/)[0];
+		const bottomPaddingUnit = computedStyles.paddingBottom.match(/[^\d.]+/)[0];
 
-		topPadding = parseFloat(paddingTop.slice(0, topPaddingMatch.index));
-		topPaddingUnit = paddingTop.slice(topPaddingMatch.index);
-		bottomPadding = parseFloat(
-			paddingBottom.slice(0, bottomPaddingMatch.index),
+		topPadding = convertToPixels(
+			parseFloat(computedStyles.paddingTop),
+			topPaddingUnit,
 		);
-		bottomPaddingUnit = paddingBottom.slice(bottomPaddingMatch.index);
+		bottomPadding = convertToPixels(
+			parseFloat(computedStyles.paddingBottom),
+			bottomPaddingUnit,
+		);
 
 		panelContent.classList.remove("ub-hide");
 		panelContent.classList.add("ub-hiding");
 
-		if (
-			"showonlyone" in toggleContainer.dataset &&
-			toggleContainer.dataset.showonlyone
-		) {
-			Array.from(toggleContainer.children)
-				.map((p) => p.children[0])
-				.filter((p) => p !== target)
-				.forEach((siblingToggle) => {
+		if (toggleContainer.dataset.showonlyone === "true") {
+			[...toggleContainer.children].forEach((child) => {
+				const siblingToggle = child.querySelector(
+					".wp-block-ub-content-toggle-accordion-title-wrap",
+				);
+				if (siblingToggle !== target) {
 					const siblingContent = siblingToggle.nextElementSibling;
 					const siblingIndicator = siblingToggle.querySelector(
 						".wp-block-ub-content-toggle-accordion-state-indicator",
@@ -45,12 +43,14 @@ const togglePanel = (target) => {
 						if (siblingIndicator) siblingIndicator.classList.remove("open");
 						siblingContent.classList.add("ub-toggle-transition");
 						siblingContent.style.height = `${siblingContent.scrollHeight}px`;
+
 						setTimeout(() => {
 							siblingContent.classList.add("ub-hiding");
 							siblingContent.style.height = "";
 						}, 20);
 					}
-				});
+				}
+			});
 		}
 	} else {
 		panelContent.style.height = getComputedStyle(panelContent).height;
@@ -61,12 +61,9 @@ const togglePanel = (target) => {
 
 	setTimeout(() => {
 		if (panelContent.classList.contains("ub-hiding")) {
-			const convertedTop = convertToPixels(topPadding, topPaddingUnit);
-			const convertedBottom = convertToPixels(bottomPadding, bottomPaddingUnit);
-
-			panelContent.style.height = `${panelContent.scrollHeight + convertedTop + convertedBottom}px`;
-			panelContent.style.paddingTop = `${convertedTop}px`;
-			panelContent.style.paddingBottom = `${convertedBottom}px`;
+			panelContent.style.height = `${panelContent.scrollHeight + topPadding + bottomPadding}px`;
+			panelContent.style.paddingTop = `${topPadding}px`;
+			panelContent.style.paddingBottom = `${bottomPadding}px`;
 
 			document.querySelectorAll(".ub_image_slider").forEach((slider) => {
 				new Swiper(`#${slider.id}`, JSON.parse(slider.dataset.swiperData));
@@ -101,108 +98,81 @@ const togglePanel = (target) => {
 };
 
 const handleKeyDown = (e, i, toggleHeads) => {
-	if (e.key === "ArrowUp" && i > 0) {
+	const { key } = e;
+	if (key === "ArrowUp" && i > 0) {
 		e.preventDefault();
 		toggleHeads[i - 1].focus();
-	} else if (e.key === "ArrowDown" && i < toggleHeads.length - 1) {
+	} else if (key === "ArrowDown" && i < toggleHeads.length - 1) {
 		e.preventDefault();
 		toggleHeads[i + 1].focus();
-	} else if ([" ", "Enter"].includes(e.key)) {
+	} else if ([" ", "Enter"].includes(key)) {
 		e.preventDefault();
 		togglePanel(e.currentTarget);
-	} else if (e.key === "Home" && i > 0) {
+	} else if (key === "Home" && i > 0) {
 		e.preventDefault();
 		toggleHeads[0].focus();
-	} else if (e.key === "End" && i < toggleHeads.length - 1) {
+	} else if (key === "End" && i < toggleHeads.length - 1) {
 		e.preventDefault();
 		toggleHeads[toggleHeads.length - 1].focus();
 	}
 };
 
-const attachTogglePanelEvents = () => {
+const attachTogglePanelEvents = (toggleContainer) => {
+	const toggleHeads = Array.from(toggleContainer.children)
+		.map((toggle) => toggle.children[0])
+		.filter(
+			(toggle) =>
+				toggle &&
+				toggle.classList.contains(
+					"wp-block-ub-content-toggle-accordion-title-wrap",
+				),
+		);
+
+	toggleHeads.forEach((toggleHead, i) => {
+		toggleHead.removeEventListener("keydown", handleKeyDown);
+		toggleHead.addEventListener("keydown", (e) =>
+			handleKeyDown(e, i, toggleHeads),
+		);
+
+		toggleHead.removeEventListener("click", togglePanel);
+		toggleHead.addEventListener("click", (e) => {
+			e.stopImmediatePropagation();
+			togglePanel(toggleHead);
+		});
+	});
+};
+
+const initTogglePanels = () => {
 	document
 		.querySelectorAll(".wp-block-ub-content-toggle")
 		.forEach((toggleContainer) => {
-			const toggleHeads = Array.from(toggleContainer.children)
-				.map((toggle) => toggle.children[0])
-				.filter(
-					(toggle) =>
-						toggle &&
-						toggle.classList.contains(
-							"wp-block-ub-content-toggle-accordion-title-wrap",
-						),
-				);
-
-			toggleHeads.forEach((toggleHead, i) => {
-				toggleHead.removeEventListener("keydown", handleKeyDown);
-				toggleHead.addEventListener("keydown", (e) =>
-					handleKeyDown(e, i, toggleHeads),
-				);
-			});
-
-			if (!toggleContainer.hasAttribute("data-preventcollapse")) {
-				let parentIsHidden = false,
-					parentClassIsHidden = false;
-				let targetElement = toggleContainer;
-
-				while (
-					!(parentIsHidden || parentClassIsHidden) &&
-					targetElement.parentElement.tagName !== "BODY"
-				) {
-					targetElement = targetElement.parentElement;
-					if (targetElement.style.display === "none") parentIsHidden = true;
-					if (getComputedStyle(targetElement).display === "none")
-						parentClassIsHidden = true;
-				}
-
-				if (parentClassIsHidden || parentIsHidden) {
-					toggleContainer.parentElement.style.setProperty(
-						"display",
-						"block",
-						"important",
-					);
-				}
-
-				Array.from(toggleContainer.children)
-					.map((p) => p.children[0])
-					.filter(
-						(toggle) =>
-							toggle &&
-							toggle.classList.contains(
-								"wp-block-ub-content-toggle-accordion-title-wrap",
-							),
-					)
-					.forEach((instance) => {
-						const panelContent = instance.nextElementSibling;
-						const panelId = instance.parentElement.getAttribute("id");
-						const hash = location.hash.substring(1);
-						if (panelId && panelId === hash) togglePanel(instance);
-
-						instance.removeEventListener("click", togglePanel);
-						instance.addEventListener("click", (e) => {
-							e.stopImmediatePropagation();
-							togglePanel(instance);
-						});
-					});
-
-				if (parentIsHidden) {
-					toggleContainer.parentElement.style.display = "none";
-				}
-
-				if (parentClassIsHidden) {
-					toggleContainer.parentElement.style.display = "";
-				}
+			if (
+				window.innerWidth < 700 &&
+				JSON.parse(toggleContainer.dataset.mobilecollapse)
+			) {
+				[...toggleContainer.children].forEach((child) => {
+					const panel = child.children[0].nextElementSibling;
+					if (!panel.classList.contains("ub-hide")) {
+						togglePanel(child.children[0]);
+					}
+				});
 			}
+			attachTogglePanelEvents(toggleContainer);
 		});
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-	attachTogglePanelEvents();
+	initTogglePanels();
 
 	const observer = new MutationObserver((mutations) => {
 		mutations.forEach((mutation) => {
 			if (mutation.type === "childList") {
-				attachTogglePanelEvents();
+				const addedNodes = [...mutation.addedNodes];
+				addedNodes.forEach((node) => {
+					if (node.classList?.contains("wp-block-ub-content-toggle")) {
+						attachTogglePanelEvents(node);
+					}
+				});
 			}
 		});
 	});
@@ -211,20 +181,4 @@ document.addEventListener("DOMContentLoaded", () => {
 		childList: true,
 		subtree: true,
 	});
-
-	document
-		.querySelectorAll(".wp-block-ub-content-toggle")
-		.forEach((toggleContainer) => {
-			if (
-				window.innerWidth < 700 &&
-				JSON.parse(toggleContainer.dataset.mobilecollapse)
-			) {
-				Array.from(toggleContainer.children).forEach((child) => {
-					const panel = child.children[0].nextElementSibling;
-					if (!panel.classList.contains("ub-hide")) {
-						togglePanel(child.children[0]);
-					}
-				});
-			}
-		});
 });

@@ -1,44 +1,43 @@
 "use strict";
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 var convertToPixels = function convertToPixels(amount, unit) {
   return unit === "%" ? amount / 100 * window.innerWidth : amount;
 };
 var togglePanel = function togglePanel(target) {
   var topPadding = 0,
-    topPaddingUnit = "",
-    bottomPadding = 0,
-    bottomPaddingUnit = "";
+    bottomPadding = 0;
   var indicator = target.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
   var panelContent = target.nextElementSibling;
-  var toggleContainer = target.parentElement.parentElement;
+  var toggleContainer = target.closest(".wp-block-ub-content-toggle");
   if (panelContent.classList.contains("ub-hide")) {
-    var _getComputedStyle = getComputedStyle(panelContent),
-      paddingTop = _getComputedStyle.paddingTop,
-      paddingBottom = _getComputedStyle.paddingBottom;
-    var topPaddingMatch = /[^\d.]/g.exec(paddingTop);
-    var bottomPaddingMatch = /[^\d.]/g.exec(paddingBottom);
-    topPadding = parseFloat(paddingTop.slice(0, topPaddingMatch.index));
-    topPaddingUnit = paddingTop.slice(topPaddingMatch.index);
-    bottomPadding = parseFloat(paddingBottom.slice(0, bottomPaddingMatch.index));
-    bottomPaddingUnit = paddingBottom.slice(bottomPaddingMatch.index);
+    var computedStyles = getComputedStyle(panelContent);
+    var topPaddingUnit = computedStyles.paddingTop.match(/[^\d.]+/)[0];
+    var bottomPaddingUnit = computedStyles.paddingBottom.match(/[^\d.]+/)[0];
+    topPadding = convertToPixels(parseFloat(computedStyles.paddingTop), topPaddingUnit);
+    bottomPadding = convertToPixels(parseFloat(computedStyles.paddingBottom), bottomPaddingUnit);
     panelContent.classList.remove("ub-hide");
     panelContent.classList.add("ub-hiding");
-    if ("showonlyone" in toggleContainer.dataset && toggleContainer.dataset.showonlyone) {
-      Array.from(toggleContainer.children).map(function (p) {
-        return p.children[0];
-      }).filter(function (p) {
-        return p !== target;
-      }).forEach(function (siblingToggle) {
-        var siblingContent = siblingToggle.nextElementSibling;
-        var siblingIndicator = siblingToggle.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
-        if (!siblingContent.classList.contains("ub-hide")) {
-          if (siblingIndicator) siblingIndicator.classList.remove("open");
-          siblingContent.classList.add("ub-toggle-transition");
-          siblingContent.style.height = "".concat(siblingContent.scrollHeight, "px");
-          setTimeout(function () {
-            siblingContent.classList.add("ub-hiding");
-            siblingContent.style.height = "";
-          }, 20);
+    if (toggleContainer.dataset.showonlyone === "true") {
+      _toConsumableArray(toggleContainer.children).forEach(function (child) {
+        var siblingToggle = child.querySelector(".wp-block-ub-content-toggle-accordion-title-wrap");
+        if (siblingToggle !== target) {
+          var siblingContent = siblingToggle.nextElementSibling;
+          var siblingIndicator = siblingToggle.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
+          if (!siblingContent.classList.contains("ub-hide")) {
+            if (siblingIndicator) siblingIndicator.classList.remove("open");
+            siblingContent.classList.add("ub-toggle-transition");
+            siblingContent.style.height = "".concat(siblingContent.scrollHeight, "px");
+            setTimeout(function () {
+              siblingContent.classList.add("ub-hiding");
+              siblingContent.style.height = "";
+            }, 20);
+          }
         }
       });
     }
@@ -49,11 +48,9 @@ var togglePanel = function togglePanel(target) {
   if (indicator) indicator.classList.toggle("open");
   setTimeout(function () {
     if (panelContent.classList.contains("ub-hiding")) {
-      var convertedTop = convertToPixels(topPadding, topPaddingUnit);
-      var convertedBottom = convertToPixels(bottomPadding, bottomPaddingUnit);
-      panelContent.style.height = "".concat(panelContent.scrollHeight + convertedTop + convertedBottom, "px");
-      panelContent.style.paddingTop = "".concat(convertedTop, "px");
-      panelContent.style.paddingBottom = "".concat(convertedBottom, "px");
+      panelContent.style.height = "".concat(panelContent.scrollHeight + topPadding + bottomPadding, "px");
+      panelContent.style.paddingTop = "".concat(topPadding, "px");
+      panelContent.style.paddingBottom = "".concat(bottomPadding, "px");
       document.querySelectorAll(".ub_image_slider").forEach(function (slider) {
         new Swiper("#".concat(slider.id), JSON.parse(slider.dataset.swiperData));
       });
@@ -81,93 +78,72 @@ var togglePanel = function togglePanel(target) {
   });
 };
 var handleKeyDown = function handleKeyDown(e, i, toggleHeads) {
-  if (e.key === "ArrowUp" && i > 0) {
+  var key = e.key;
+  if (key === "ArrowUp" && i > 0) {
     e.preventDefault();
     toggleHeads[i - 1].focus();
-  } else if (e.key === "ArrowDown" && i < toggleHeads.length - 1) {
+  } else if (key === "ArrowDown" && i < toggleHeads.length - 1) {
     e.preventDefault();
     toggleHeads[i + 1].focus();
-  } else if ([" ", "Enter"].includes(e.key)) {
+  } else if ([" ", "Enter"].includes(key)) {
     e.preventDefault();
     togglePanel(e.currentTarget);
-  } else if (e.key === "Home" && i > 0) {
+  } else if (key === "Home" && i > 0) {
     e.preventDefault();
     toggleHeads[0].focus();
-  } else if (e.key === "End" && i < toggleHeads.length - 1) {
+  } else if (key === "End" && i < toggleHeads.length - 1) {
     e.preventDefault();
     toggleHeads[toggleHeads.length - 1].focus();
   }
 };
-var attachTogglePanelEvents = function attachTogglePanelEvents() {
-  document.querySelectorAll(".wp-block-ub-content-toggle").forEach(function (toggleContainer) {
-    var toggleHeads = Array.from(toggleContainer.children).map(function (toggle) {
-      return toggle.children[0];
-    }).filter(function (toggle) {
-      return toggle && toggle.classList.contains("wp-block-ub-content-toggle-accordion-title-wrap");
+var attachTogglePanelEvents = function attachTogglePanelEvents(toggleContainer) {
+  var toggleHeads = Array.from(toggleContainer.children).map(function (toggle) {
+    return toggle.children[0];
+  }).filter(function (toggle) {
+    return toggle && toggle.classList.contains("wp-block-ub-content-toggle-accordion-title-wrap");
+  });
+  toggleHeads.forEach(function (toggleHead, i) {
+    toggleHead.removeEventListener("keydown", handleKeyDown);
+    toggleHead.addEventListener("keydown", function (e) {
+      return handleKeyDown(e, i, toggleHeads);
     });
-    toggleHeads.forEach(function (toggleHead, i) {
-      toggleHead.removeEventListener("keydown", handleKeyDown);
-      toggleHead.addEventListener("keydown", function (e) {
-        return handleKeyDown(e, i, toggleHeads);
-      });
+    toggleHead.removeEventListener("click", togglePanel);
+    toggleHead.addEventListener("click", function (e) {
+      e.stopImmediatePropagation();
+      togglePanel(toggleHead);
     });
-    if (!toggleContainer.hasAttribute("data-preventcollapse")) {
-      var parentIsHidden = false,
-        parentClassIsHidden = false;
-      var targetElement = toggleContainer;
-      while (!(parentIsHidden || parentClassIsHidden) && targetElement.parentElement.tagName !== "BODY") {
-        targetElement = targetElement.parentElement;
-        if (targetElement.style.display === "none") parentIsHidden = true;
-        if (getComputedStyle(targetElement).display === "none") parentClassIsHidden = true;
-      }
-      if (parentClassIsHidden || parentIsHidden) {
-        toggleContainer.parentElement.style.setProperty("display", "block", "important");
-      }
-      Array.from(toggleContainer.children).map(function (p) {
-        return p.children[0];
-      }).filter(function (toggle) {
-        return toggle && toggle.classList.contains("wp-block-ub-content-toggle-accordion-title-wrap");
-      }).forEach(function (instance) {
-        var panelContent = instance.nextElementSibling;
-        var panelId = instance.parentElement.getAttribute("id");
-        var hash = location.hash.substring(1);
-        if (panelId && panelId === hash) togglePanel(instance);
-        instance.removeEventListener("click", togglePanel);
-        instance.addEventListener("click", function (e) {
-          e.stopImmediatePropagation();
-          togglePanel(instance);
-        });
-      });
-      if (parentIsHidden) {
-        toggleContainer.parentElement.style.display = "none";
-      }
-      if (parentClassIsHidden) {
-        toggleContainer.parentElement.style.display = "";
-      }
-    }
   });
 };
-document.addEventListener("DOMContentLoaded", function () {
-  attachTogglePanelEvents();
-  var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      if (mutation.type === "childList") {
-        attachTogglePanelEvents();
-      }
-    });
-  });
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
+var initTogglePanels = function initTogglePanels() {
   document.querySelectorAll(".wp-block-ub-content-toggle").forEach(function (toggleContainer) {
     if (window.innerWidth < 700 && JSON.parse(toggleContainer.dataset.mobilecollapse)) {
-      Array.from(toggleContainer.children).forEach(function (child) {
+      _toConsumableArray(toggleContainer.children).forEach(function (child) {
         var panel = child.children[0].nextElementSibling;
         if (!panel.classList.contains("ub-hide")) {
           togglePanel(child.children[0]);
         }
       });
     }
+    attachTogglePanelEvents(toggleContainer);
+  });
+};
+document.addEventListener("DOMContentLoaded", function () {
+  initTogglePanels();
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.type === "childList") {
+        var addedNodes = _toConsumableArray(mutation.addedNodes);
+        addedNodes.forEach(function (node) {
+          var _node$classList;
+          if ((_node$classList = node.classList) !== null && _node$classList !== void 0 && _node$classList.contains("wp-block-ub-content-toggle")) {
+            attachTogglePanelEvents(node);
+          }
+        });
+      }
+    });
+  });
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
   });
 });
