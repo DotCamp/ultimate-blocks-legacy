@@ -21,14 +21,8 @@
 	}
 	.ub-post-grid-items {
 		align-items: flex-start;
-		row-gap: var(--ub-post-grid-row-gap, 32px);
-		column-gap: var(--ub-post-grid-column-gap, 32px);
 		article {
 			overflow: hidden;
-			padding-top: var(--ub-post-grid-post-padding-top);
-			padding-right: var(--ub-post-grid-post-padding-right);
-			padding-bottom: var(--ub-post-grid-post-padding-bottom);
-			padding-left: var(--ub-post-grid-post-padding-left);
 			background: var(--ub-post-grid-post-background);
 			&:hover {
 				background: var(
@@ -36,10 +30,6 @@
 					var(--ub-post-grid-post-background)
 				);
 			}
-			border-top-left-radius: var(--ub-post-grid-post-top-left-radius);
-			border-top-right-radius: var(--ub-post-grid-post-top-right-radius);
-			border-bottom-left-radius: var(--ub-post-grid-post-bottom-left-radius);
-			border-bottom-right-radius: var(--ub-post-grid-post-bottom-right-radius);
 			.ub-block-post-grid-image {
 				img {
 					border-top-left-radius: var(--ub-post-grid-image-top-left-radius);
@@ -102,10 +92,6 @@
 	}
 	.ub-block-post-grid-text {
 		text-align: left;
-		padding-top: var(--ub-post-grid-content-padding-top);
-		padding-right: var(--ub-post-grid-content-padding-right);
-		padding-bottom: var(--ub-post-grid-content-padding-bottom);
-		padding-left: var(--ub-post-grid-content-padding-left);
 	}
 	a {
 		text-decoration: none;
@@ -172,14 +158,6 @@
 		text-decoration: none;
 		color: var(--ub-post-grid-link-color, #292929);
 		background: var(--ub-post-grid-link-background);
-		padding-top: var(--ub-post-grid-link-padding-top);
-		padding-right: var(--ub-post-grid-link-padding-right);
-		padding-bottom: var(--ub-post-grid-link-padding-bottom);
-		padding-left: var(--ub-post-grid-link-padding-left);
-		border-top-left-radius: var(--ub-post-grid-link-top-left-radius);
-		border-top-right-radius: var(--ub-post-grid-link-top-right-radius);
-		border-bottom-left-radius: var(--ub-post-grid-link-bottom-left-radius);
-		border-bottom-right-radius: var(--ub-post-grid-link-bottom-right-radius);
 		&:hover {
 			text-decoration: underline;
 			color: var(

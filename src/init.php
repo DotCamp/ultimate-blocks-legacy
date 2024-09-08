@@ -25,81 +25,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'get_current_screen' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/screen.php' );
 }
-function ub_get_post_grid_styles($attributes){
-	$link_padding 		= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['linkPadding']) ? $attributes['linkPadding'] : array());
-	$content_padding 	= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['contentPadding']) ? $attributes['contentPadding'] : array());
-	$padding			= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['padding']) ? $attributes['padding'] : array() );
-	$margin 			= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['margin']) ? $attributes['margin'] : array() );
-	$post_padding 		= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['postPadding']) ? $attributes['postPadding'] : array() );
-
-    	$imageBorderRadius = array(
-    	    "--ub-post-grid-image-top-left-radius" 		=> !empty($attributes['imageBorderRadius']['topLeft']) ? $attributes['imageBorderRadius']['topLeft'] : "",
-    	    "--ub-post-grid-image-top-right-radius" 		=> !empty($attributes['imageBorderRadius']['topRight']) ? $attributes['imageBorderRadius']['topRight'] : "",
-    	    "--ub-post-grid-image-bottom-left-radius" 	=> !empty($attributes['imageBorderRadius']['bottomLeft']) ? $attributes['imageBorderRadius']['bottomLeft'] : "",
-    	    "--ub-post-grid-image-bottom-right-radius" 	=> !empty($attributes['imageBorderRadius']['bottomRight']) ? $attributes['imageBorderRadius']['bottomRight'] : "",
-    	);
-
-    	$postBorderRadius = array(
-    	    "--ub-post-grid-post-top-left-radius" 		=> !empty($attributes['postBorderRadius']['topLeft']) ? $attributes['postBorderRadius']['topLeft'] : "",
-    	    "--ub-post-grid-post-top-right-radius" 		=> !empty($attributes['postBorderRadius']['topRight']) ? $attributes['postBorderRadius']['topRight'] : "",
-    	    "--ub-post-grid-post-bottom-left-radius"		=> !empty($attributes['postBorderRadius']['bottomLeft']) ? $attributes['postBorderRadius']['bottomLeft'] : "",
-    	    "--ub-post-grid-post-bottom-right-radius"	=> !empty($attributes['postBorderRadius']['bottomRight']) ? $attributes['postBorderRadius']['bottomRight'] : "",
-    	);
-
-    	$linkBorderRadius = array(
-    	    "--ub-post-grid-link-top-left-radius"		=> !empty($attributes['linkBorderRadius']['topLeft']) ? $attributes['linkBorderRadius']['topLeft'] : "",
-    	    "--ub-post-grid-link-top-right-radius"		=> !empty($attributes['linkBorderRadius']['topRight']) ? $attributes['linkBorderRadius']['topRight'] : "",
-    	    "--ub-post-grid-link-bottom-left-radius"		=> !empty($attributes['linkBorderRadius']['bottomLeft']) ? $attributes['linkBorderRadius']['bottomLeft'] : "",
-    	    "--ub-post-grid-link-bottom-right-radius"	=> !empty($attributes['linkBorderRadius']['bottomRight']) ? $attributes['linkBorderRadius']['bottomRight'] : "",
-    	);
-
-    	$styles = array(
-    	    	// Colors
-    	    	"--ub-post-grid-post-background" 			=> !empty($attributes['postBackgroundColor']) ? $attributes['postBackgroundColor'] : $attributes['postBackgroundGradient'],
-    	    	"--ub-post-grid-link-background" 			=> !empty($attributes['linkBackgroundColor']) ? $attributes['linkBackgroundColor'] : $attributes['linkBackgroundGradient'],
-    	    	"--ub-post-grid-title-color" 				=> $attributes['postTitleColor'],
-    	    	"--ub-post-grid-author-color" 			=> $attributes['authorColor'],
-    	    	"--ub-post-grid-date-color" 				=> $attributes['dateColor'],
-    	    	"--ub-post-grid-excerpt-color" 			=> $attributes['excerptColor'],
-    	    	"--ub-post-grid-link-color" 				=> $attributes['linkColor'],
-    	    	// Hover
-    	    	"--ub-post-grid-post-hover-background"		=> !empty($attributes['postBackgroundColorHover']) ? $attributes['postBackgroundColorHover'] : $attributes['postBackgroundGradientHover'],
-    	    	"--ub-post-grid-link-hover-background" 		=> !empty($attributes['linkBackgroundColorHover']) ? $attributes['linkBackgroundColorHover'] : $attributes['linkBackgroundGradientHover'],
-    	    	"--ub-post-grid-title-hover-color" 		=> $attributes['postTitleColorHover'],
-    	    	"--ub-post-grid-author-hover-color" 		=> $attributes['authorColorHover'],
-    	    	"--ub-post-grid-date-hover-color" 			=> $attributes['dateColorHover'],
-    	    	"--ub-post-grid-excerpt-hover-color" 		=> $attributes['excerptColorHover'],
-    	    	"--ub-post-grid-link-hover-color" 			=> $attributes['linkColorHover'],
-    	    	// Spacing
-    	    	"--ub-post-grid-content-padding-top" 		=> isset($content_padding['top']) ? $content_padding['top'] : '',
-    	    	"--ub-post-grid-content-padding-right" 		=> isset($content_padding['right']) ? $content_padding['right'] : '',
-    	    	"--ub-post-grid-content-padding-bottom" 	=> isset($content_padding['bottom']) ? $content_padding['bottom'] : '',
-    	    	"--ub-post-grid-content-padding-left" 		=> isset($content_padding['left']) ? $content_padding['left'] : '',
-    	    	"--ub-post-grid-link-padding-top" 			=> isset($link_padding['top']) ? $link_padding['top'] : '',
-    	    	"--ub-post-grid-link-padding-right" 		=> isset($link_padding['right']) ? $link_padding['right'] : '',
-    	    	"--ub-post-grid-link-padding-bottom" 		=> isset($link_padding['bottom']) ? $link_padding['bottom'] : '',
-    	    	"--ub-post-grid-link-padding-left" 		=> isset($link_padding['left']) ? $link_padding['left'] : '',
-    	    	"--ub-post-grid-post-padding-top" 			=> isset($post_padding['top']) ? $post_padding['top'] : '',
-    	    	"--ub-post-grid-post-padding-right" 		=> isset($post_padding['right']) ? $post_padding['right'] : '',
-    	    	"--ub-post-grid-post-padding-bottom" 		=> isset($post_padding['bottom']) ? $post_padding['bottom'] : '',
-    	    	"--ub-post-grid-post-padding-left" 		=> isset($post_padding['left']) ? $post_padding['left'] : '',
-		"--ub-post-grid-row-gap" 				=> isset($attributes['rowGap']) ? $attributes['rowGap'] : "",
-		"--ub-post-grid-column-gap" 				=> isset($attributes['columnGap']) ? $attributes['columnGap'] : "",
-	    	'padding-top'         					=> isset($padding['top']) ? $padding['top'] : "",
-		'padding-left'        					=> isset($padding['left']) ? $padding['left'] : "",
-		'padding-right'       					=> isset($padding['right']) ? $padding['right'] : "",
-		'padding-bottom'      					=> isset($padding['bottom']) ? $padding['bottom'] : "",
-		'margin-top'         					=> !empty($margin['top']) ? $margin['top'] . " !important" : "",
-		'margin-left'        					=> !empty($margin['left']) ? $margin['left'] . " !important" : "",
-		'margin-right'       					=> !empty($margin['right']) ? $margin['right'] . " !important" : "",
-		'margin-bottom'      					=> !empty($margin['bottom']) ? $margin['bottom'] . " !important" : "",
-    	);
-	$styles = array_merge( $styles, $imageBorderRadius, $postBorderRadius, $linkBorderRadius );
-    	// Filter out undefined, false, empty, and 'undefined undefined undefined' values.
-    	$css = Ultimate_Blocks\includes\generate_css_string($styles);
-
-    	return $css;
-}
 function ub_get_spacing_styles( $attributes, $paddingImportant = false ) {
 	$padding = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['padding']) ? $attributes['padding'] : array() );
 	$margin = Ultimate_Blocks\includes\get_spacing_css( isset($attributes['margin']) ? $attributes['margin'] : array() );
@@ -1348,11 +1273,6 @@ function ub_include_block_attribute_css() {
 										 $prefix . ' .ub_testimonial_author_role{' . PHP_EOL .
 										 'text-align: ' . $attributes['authorRoleAlign'] . ';' . PHP_EOL .
 										 '}' . PHP_EOL;
-					break;
-				case 'ub/post-grid':
-					$prefix = '#ub-post-grid-' . $attributes['blockID'];
-					$styles = ub_get_post_grid_styles($attributes);
-					$blockStylesheets .= $prefix . '{' . PHP_EOL . $styles . PHP_EOL . "}";
 					break;
 			}
 		}
