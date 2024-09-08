@@ -16,20 +16,20 @@ import { PanelColorSettings, useBlockProps } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import { registerBlockType, createBlock } from "@wordpress/blocks";
 
-import { InspectorControls, HeightControl } from "@wordpress/block-editor";
-import metadata from "./block.json";
 import {
-	PanelBody,
-	PanelRow,
-	RangeControl,
-	SelectControl,
-	Button,
-	ButtonGroup,
-} from "@wordpress/components";
+	InspectorControls,
+	HeightControl,
+	BlockAlignmentControl,
+	BlockControls,
+} from "@wordpress/block-editor";
+import metadata from "./block.json";
+import { PanelBody, RangeControl, SelectControl } from "@wordpress/components";
 import { getStyles } from "./get-styles";
 import { CustomToggleGroupControl, SpacingControl } from "../components";
 import { withSelect } from "@wordpress/data";
 import { AVAILABLE_JUSTIFICATIONS, getParentBlock } from "../../common";
+import classNames from "classnames";
+import { isEmpty } from "lodash";
 
 const attributes = {
 	blockID: {
@@ -84,6 +84,7 @@ function DividerBlock(props) {
 			borderColor,
 			borderHeight,
 			width,
+			align,
 			alignment,
 			orientation,
 			lineHeight,
@@ -99,7 +100,9 @@ function DividerBlock(props) {
 		rootBlockClientId,
 	} = props;
 	const blockProps = useBlockProps({
-		className: `ub-divider-orientation-${orientation}`,
+		className: classNames(`ub-divider-orientation-${orientation}`, {
+			[`align${align}`]: !isEmpty(align),
+		}),
 	});
 	useEffect(() => {
 		if (blockID === "") {
@@ -130,6 +133,12 @@ function DividerBlock(props) {
 				};
 	return (
 		<div {...blockProps}>
+			<BlockControls group="block">
+				<BlockAlignmentControl
+					value={align}
+					onChange={(newValue) => setAttributes({ align: newValue })}
+				/>
+			</BlockControls>
 			{isSelected && (
 				<Fragment>
 					<InspectorControls>
