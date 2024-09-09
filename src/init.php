@@ -351,24 +351,6 @@ function ub_include_block_attribute_css() {
 					$blockStylesheets .= $prefix .  '{' . $styles . '}';
 
 					break;
-				case 'ub/advanced-heading':
-					$styles = ub_get_spacing_styles($attributes);
-
-					$prefix           = '.ub_advanced_heading[data-blockid="' . $attributes['blockID'] . '"]';
-					$blockStylesheets .= $prefix . ' {' . PHP_EOL .
-										 ( $attributes['alignment'] === 'none' ? '' : 'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL ) .
-										 ( $attributes['textColor'] ? 'color: ' . $attributes['textColor'] . ';' . PHP_EOL : '' ) .
-										 ( $attributes['backgroundColor'] ? 'background-color: ' . $attributes['backgroundColor'] . ';' . PHP_EOL : '' ) .
-										 ( $attributes['fontSize'] ? 'font-size: ' . $attributes['fontSize'] . 'px;' . PHP_EOL : '' ) .
-										 'letter-spacing: ' . $attributes['letterSpacing'] . 'px;' . PHP_EOL .
-										 'text-transform: ' . $attributes['textTransform'] . ';' . PHP_EOL .
-										 'font-family: ' . ( strpos( $attributes['fontFamily'], " " ) ? '"' : '' )
-										 . $attributes['fontFamily'] . ( strpos( $attributes['fontFamily'],
-									" " ) ? '"' : '' ) . ';' . $styles . PHP_EOL .
-										 'font-weight: ' . $attributes['fontWeight'] . ';' . PHP_EOL .
-										 ( $attributes['lineHeight'] ? 'line-height: ' . $attributes['lineHeight'] . 'px;' . PHP_EOL : '' ) .
-										 '}';
-					break;
 				case 'ub/button':
 					$styles = ub_get_spacing_styles($attributes);
 					$prefix = '#ub-button-' . $attributes['blockID'];

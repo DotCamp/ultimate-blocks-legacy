@@ -1,6 +1,18 @@
 <?php
 
 function ub_render_advanced_heading_block( $attributes ) {
+	$spacingStyles = ub_get_spacing_styles($attributes);
+
+	$styles = ( $attributes['alignment'] === 'none' ? '' : 'text-align: ' . $attributes['alignment'] . ';' ) .
+		( $attributes['textColor'] ? 'color: ' . $attributes['textColor'] . ';' : '' ) .
+		( $attributes['backgroundColor'] ? 'background-color: ' . $attributes['backgroundColor'] . ';' : '' ) .
+		( $attributes['fontSize'] ? 'font-size: ' . $attributes['fontSize'] . 'px;' : '' ) .
+		'letter-spacing: ' . $attributes['letterSpacing'] . 'px;' .
+		'text-transform: ' . $attributes['textTransform'] . ';' .
+		'font-family: ' . $attributes['fontFamily'] . ';' . $spacingStyles .
+		'font-weight: ' . $attributes['fontWeight'] . ';' .
+		( $attributes['lineHeight'] ? 'line-height: ' . $attributes['lineHeight'] . 'px;' : '' );
+
 	extract( $attributes );
 	$classes                  = array( 'ub_advanced_heading' );
 	$ids                      = array();
@@ -9,6 +21,7 @@ function ub_render_advanced_heading_block( $attributes ) {
 		array(
 			'class' => implode( ' ', $classes ),
 			'id'    => implode( ' ', $ids ),
+			'style' => $styles,
 		)
 	);
 
