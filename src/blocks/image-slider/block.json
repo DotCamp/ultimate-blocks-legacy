@@ -15,6 +15,26 @@
 			"type": "string",
 			"default": ""
 		},
+		"navigationBackgroundColor": {
+			"type": "string",
+			"default": null
+		},
+		"navigationGradientColor": {
+			"type": "string",
+			"default": null
+		},
+		"navigationColor": {
+			"type": "string",
+			"default": null
+		},
+		"activePaginationColor": {
+			"type": "string",
+			"default": null
+		},
+		"paginationColor": {
+			"type": "string",
+			"default": null
+		},
 		"slidesPerView": {
 			"type": "number",
 			"default": 1

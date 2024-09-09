@@ -117,3 +117,17 @@ export function getBorderVariablesCss(border, slug) {
 
 	return borders;
 }
+
+export function getBackgroundColorVar(
+	attributes,
+	bgColorAttrKey,
+	gradientAttrKey,
+) {
+	if (!isEmpty(attributes[bgColorAttrKey])) {
+		return attributes[bgColorAttrKey];
+	} else if (!isEmpty(attributes[gradientAttrKey])) {
+		return attributes[gradientAttrKey];
+	} else {
+		return "";
+	}
+}

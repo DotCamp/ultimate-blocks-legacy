@@ -1,5 +1,20 @@
 <?php
 
+function ub_get_image_slider_styles( $attributes ) {
+	$navigation_color = isset($attributes['navigationColor']) ? $attributes['navigationColor'] : '';
+	$pagination_color = isset($attributes['paginationColor']) ? $attributes['paginationColor'] : '';
+	$active_pagination_color = isset($attributes['activePaginationColor']) ? $attributes['activePaginationColor'] : '';
+
+	$styles = array(
+		'--swiper-navigation-color'				=> $navigation_color,
+		'--swiper-pagination-color'				=> $active_pagination_color,
+		'--swiper-inactive-pagination-color'	=> $pagination_color,
+		'--swiper-navigation-background-color'	=> Ultimate_Blocks\includes\get_background_color_var($attributes, 'navigationBackgroundColor', 'navigationGradientColor')
+	);
+
+	return Ultimate_Blocks\includes\generate_css_string( $styles );
+}
+
 /**
  * Enqueue frontend script for content toggle block
  *
@@ -27,9 +42,11 @@ function ub_render_image_slider_block($attributes){
         $classes[] = 'align' . esc_attr($align) ;
     }
 
+	$styles = ub_get_image_slider_styles($attributes);
     $wrapper_attributes = get_block_wrapper_attributes(
         array(
-            'class' => implode(' ', $classes)
+            'class' => implode(' ', $classes),
+			'style' => $styles
         )
     );
     return '<div ' . $wrapper_attributes .  ' ' . ($blockID === '' ? 'style="min-height: ' . (25 + (count($imageArray) > 0) ? esc_attr($sliderHeight) : 200) . 'px;"'

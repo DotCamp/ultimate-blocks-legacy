@@ -1,5 +1,5 @@
 import { omitBy, isUndefined, trim, isEmpty } from "lodash";
-import { getSpacingCss } from "../utils/styling-helpers";
+import { getBackgroundColorVar, getSpacingCss } from "../utils/styling-helpers";
 
 export function getStyles(attributes) {
 	const { padding, margin } = attributes;
@@ -15,6 +15,14 @@ export function getStyles(attributes) {
 		marginRight: marginObj?.right,
 		marginBottom: marginObj?.bottom,
 		marginLeft: marginObj?.left,
+		"--swiper-navigation-color": attributes.navigationColor,
+		"--swiper-pagination-color": attributes.activePaginationColor,
+		"--swiper-inactive-pagination-color": attributes.paginationColor,
+		"--swiper-navigation-background-color": getBackgroundColorVar(
+			attributes,
+			"navigationBackgroundColor",
+			"navigationGradientColor",
+		),
 	};
 
 	return omitBy(
@@ -24,6 +32,6 @@ export function getStyles(attributes) {
 			isEmpty(value) ||
 			isUndefined(value) ||
 			trim(value) === "" ||
-			trim(value) === "undefined undefined undefined"
+			trim(value) === "undefined undefined undefined",
 	);
 }

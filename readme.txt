@@ -150,6 +150,11 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.2.3 =
+
+* NEW: Alignment option for the divider block.
+* NEW: Add navigation and pagination color option in image slider.
+
 = 3.2.2 =
 
 * NEW: Link to Divider Feature in Table of content block.
