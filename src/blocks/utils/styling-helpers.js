@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import { omitBy, isUndefined, trim, isEmpty } from "lodash";
 
 function hasSplitBorders(border = {}) {
 	const sides = ["top", "right", "bottom", "left"];
@@ -116,4 +116,15 @@ export function getBorderVariablesCss(border, slug) {
 	}
 
 	return borders;
+}
+export function generateStyles(styles) {
+	return omitBy(
+		styles,
+		(value) =>
+			value === false ||
+			isEmpty(value) ||
+			isUndefined(value) ||
+			trim(value) === "" ||
+			trim(value) === "undefined undefined undefined",
+	);
 }

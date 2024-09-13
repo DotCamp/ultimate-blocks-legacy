@@ -72,16 +72,16 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
 
 			$post_padding 		= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['postPadding']) ? $attributes['postPadding'] : array() );
 			$postBorderRadius = array(
-				"border-top-left-radius" 		=> !empty($attributes['postBorderRadius']['topLeft']) ? $attributes['postBorderRadius']['topLeft'] : "",
-				"border-top-right-radius" 		=> !empty($attributes['postBorderRadius']['topRight']) ? $attributes['postBorderRadius']['topRight'] : "",
-				"border-bottom-left-radius"		=> !empty($attributes['postBorderRadius']['bottomLeft']) ? $attributes['postBorderRadius']['bottomLeft'] : "",
-				"border-bottom-right-radius"	=> !empty($attributes['postBorderRadius']['bottomRight']) ? $attributes['postBorderRadius']['bottomRight'] : "",
-				"--ub-post-grid-post-background" 			=> !empty($attributes['postBackgroundColor']) ? $attributes['postBackgroundColor'] : $attributes['postBackgroundGradient'],
-				"--ub-post-grid-post-hover-background"		=> !empty($attributes['postBackgroundColorHover']) ? $attributes['postBackgroundColorHover'] : $attributes['postBackgroundGradientHover'],
-				"padding-top" 			=> isset($post_padding['top']) ? $post_padding['top'] : '',
-				"padding-right" 		=> isset($post_padding['right']) ? $post_padding['right'] : '',
-				"padding-bottom" 		=> isset($post_padding['bottom']) ? $post_padding['bottom'] : '',
-				"padding-left" 		=> isset($post_padding['left']) ? $post_padding['left'] : '',
+				"padding-top" 								=> isset($post_padding['top']) ? $post_padding['top'] : '',
+				"padding-left" 								=> isset($post_padding['left']) ? $post_padding['left'] : '',
+				"padding-right" 							=> isset($post_padding['right']) ? $post_padding['right'] : '',
+				"padding-bottom" 							=> isset($post_padding['bottom']) ? $post_padding['bottom'] : '',
+				"border-top-left-radius" 					=> !empty($attributes['postBorderRadius']['topLeft']) ? $attributes['postBorderRadius']['topLeft'] : "",
+				"border-top-right-radius" 					=> !empty($attributes['postBorderRadius']['topRight']) ? $attributes['postBorderRadius']['topRight'] : "",
+				"border-bottom-left-radius"					=> !empty($attributes['postBorderRadius']['bottomLeft']) ? $attributes['postBorderRadius']['bottomLeft'] : "",
+				"border-bottom-right-radius"				=> !empty($attributes['postBorderRadius']['bottomRight']) ? $attributes['postBorderRadius']['bottomRight'] : "",
+				"--ub-post-grid-post-background" 			=> Ultimate_Blocks\includes\get_background_color_var($attributes,'postBackgroundColor', 'postBackgroundGradient'),
+				"--ub-post-grid-post-hover-background" 		=> Ultimate_Blocks\includes\get_background_color_var($attributes,'postBackgroundColorHover', 'postBackgroundGradientHover'),
 			);
 
             /* Start the markup for the post */
@@ -104,7 +104,7 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
 
                 /* Output the featured image */
                 $post_grid .= sprintf(
-                    '<div class="ub-block-post-grid-image" style="%3"><a href="%1$s" rel="bookmark" aria-hidden="true" tabindex="-1">%2$s</a></div>',
+                    '<div class="ub-block-post-grid-image" style="%3$s"><a href="%1$s" rel="bookmark" aria-hidden="true" tabindex="-1">%2$s</a></div>',
                     esc_url( get_permalink( $post_id ) ),
 					wp_get_attachment_image( $post_thumb_id, array($attributes['postImageWidth'], $attributes['preservePostImageAspectRatio'] ? 0 : $attributes['postImageHeight']) ), //use array
 					esc_attr( Ultimate_Blocks\includes\generate_css_string($styles) ),
@@ -149,8 +149,8 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
                 }
 
 				$styles = [
-					"--ub-post-grid-title-color"		=> $attributes['postTitleColor'],
-					"--ub-post-grid-title-hover-color"	=> $attributes['postTitleColorHover'],
+					"--ub-post-grid-title-color"		=> isset($attributes['postTitleColor']) ? $attributes['postTitleColor'] : '',
+					"--ub-post-grid-title-hover-color"	=> isset($attributes['postTitleColorHover']) ? $attributes['postTitleColorHover']: "",
 				];
 
                 $post_grid .= sprintf(
@@ -165,8 +165,8 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
             /* Get the post author */
             if ( isset( $attributes['checkPostAuthor'] ) && $attributes['checkPostAuthor'] ) {
 				$styles = [
-					"--ub-post-grid-author-color" 			=> $attributes['authorColor'],
-					"--ub-post-grid-author-hover-color" 		=> $attributes['authorColorHover'],
+					"--ub-post-grid-author-color" 			=> isset($attributes['authorColor']) ? $attributes['authorColor'] : "",
+					"--ub-post-grid-author-hover-color" 		=> isset($attributes['authorColorHover']) ? $attributes['authorColorHover'] : "",
 				];
 
                 $post_grid .= sprintf(
@@ -180,8 +180,8 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
             /* Get the post date */
             if ( isset( $attributes['checkPostDate'] ) && $attributes['checkPostDate'] ) {
 				$styles = [
-					"--ub-post-grid-date-color" 		=> $attributes['dateColor'],
-					"--ub-post-grid-date-hover-color" 	=> $attributes['dateColorHover'],
+					"--ub-post-grid-date-color" 		=> isset($attributes['dateColor']) ? $attributes['dateColor'] : '',
+					"--ub-post-grid-date-hover-color" 	=> isset($attributes['dateColorHover']) ? $attributes['dateColorHover'] : '',
 				];
 
                 $post_grid .= sprintf(
@@ -234,8 +234,8 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
 
             if ( isset( $attributes['checkPostExcerpt'] ) && $attributes['checkPostExcerpt'] && !empty( $excerpt )) {
 				$styles = [
-					"--ub-post-grid-excerpt-color" 			=> $attributes['excerptColor'],
-					"--ub-post-grid-excerpt-hover-color" 		=> $attributes['excerptColorHover'],
+					"--ub-post-grid-excerpt-color" 			=> isset($attributes['excerptColor']) ? $attributes['excerptColor'] : "",
+					"--ub-post-grid-excerpt-hover-color" 		=> isset($attributes['excerptColorHover']) ? $attributes['excerptColorHover'] : "",
 				];
 
 				$post_grid .= sprintf(
@@ -247,14 +247,14 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
 
 			$link_padding 		= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['linkPadding']) ? $attributes['linkPadding'] : array());
 			$styles = array(
-				"border-top-left-radius"		=> !empty($attributes['linkBorderRadius']['topLeft']) ? $attributes['linkBorderRadius']['topLeft'] : "",
-				"border-top-right-radius"		=> !empty($attributes['linkBorderRadius']['topRight']) ? $attributes['linkBorderRadius']['topRight'] : "",
-				"border-bottom-left-radius"	=> !empty($attributes['linkBorderRadius']['bottomLeft']) ? $attributes['linkBorderRadius']['bottomLeft'] : "",
-				"border-bottom-right-radius"	=> !empty($attributes['linkBorderRadius']['bottomRight']) ? $attributes['linkBorderRadius']['bottomRight'] : "",
-				"--ub-post-grid-link-background" 			=> !empty($attributes['linkBackgroundColor']) ? $attributes['linkBackgroundColor'] : $attributes['linkBackgroundGradient'],
-				"--ub-post-grid-link-color" 				=> $attributes['linkColor'],
-				"--ub-post-grid-link-hover-background" 		=> !empty($attributes['linkBackgroundColorHover']) ? $attributes['linkBackgroundColorHover'] : $attributes['linkBackgroundGradientHover'],
-				"--ub-post-grid-link-hover-color" 			=> $attributes['linkColorHover'],
+				"border-top-left-radius"					=> !empty($attributes['linkBorderRadius']['topLeft']) ? $attributes['linkBorderRadius']['topLeft'] : "",
+				"border-top-right-radius"					=> !empty($attributes['linkBorderRadius']['topRight']) ? $attributes['linkBorderRadius']['topRight'] : "",
+				"border-bottom-left-radius"					=> !empty($attributes['linkBorderRadius']['bottomLeft']) ? $attributes['linkBorderRadius']['bottomLeft'] : "",
+				"border-bottom-right-radius"				=> !empty($attributes['linkBorderRadius']['bottomRight']) ? $attributes['linkBorderRadius']['bottomRight'] : "",
+				"--ub-post-grid-link-background" 			=> Ultimate_Blocks\includes\get_background_color_var($attributes, 'linkBackgroundColor', 'linkBackgroundGradient'),
+				"--ub-post-grid-link-color" 				=> isset($attributes['linkColor']) ? $attributes['linkColor'] : "",
+				"--ub-post-grid-link-hover-background" 		=> Ultimate_Blocks\includes\get_background_color_var($attributes, 'linkBackgroundColorHover', 'linkBackgroundGradientHover'),
+				"--ub-post-grid-link-hover-color" 			=> isset($attributes['linkColorHover']) ? $attributes['linkColorHover'] : "",
 				"padding-top" 								=> isset($link_padding['top']) ? $link_padding['top'] : '',
 				"padding-right" 							=> isset($link_padding['right']) ? $link_padding['right'] : '',
 				"padding-bottom" 							=> isset($link_padding['bottom']) ? $link_padding['bottom'] : '',
@@ -317,14 +317,15 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
         $is_preserve_post_image_aspect_ratio = isset($attributes['preservePostImageAspectRatio']) && $attributes['preservePostImageAspectRatio']  ? " preserve-post-image-aspect-ratio " : "";
 
         /* Output the post markup */
-		$styles = [
-			"row-gap" 		=> isset($attributes['rowGap']) ? $attributes['rowGap'] : "32px",
-			"column-gap"	=> isset($attributes['columnGap']) ? $attributes['columnGap'] : "32px",
+
+		$grid_styles = [
+			"row-gap" 		=> !empty($attributes['rowGap']) ? $attributes['rowGap'] : "32px",
+			"column-gap"	=> !empty($attributes['columnGap']) ? $attributes['columnGap'] : "32px",
 		];
 
 		$padding			= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['padding']) ? $attributes['padding'] : array() );
 		$margin 			= Ultimate_Blocks\includes\get_spacing_css(!empty($attributes['margin']) ? $attributes['margin'] : array() );
-		$styles = array(
+		$wrapper_spacing_styles = array(
 			'padding-top'   	=> isset($padding['top']) ? $padding['top'] : "",
 			'padding-left'  	=> isset($padding['left']) ? $padding['left'] : "",
 			'padding-right' 	=> isset($padding['right']) ? $padding['right'] : "",
@@ -343,10 +344,11 @@ function ub_render_post_grid_block( $attributes, $content, $block ){
             $post_grid,
             esc_attr($is_equal_height),
 			$is_preserve_post_image_aspect_ratio,
-			esc_attr(Ultimate_Blocks\includes\generate_css_string($styles)),
-			esc_attr(Ultimate_Blocks\includes\generate_css_string($styles)),
+			esc_attr(Ultimate_Blocks\includes\generate_css_string($grid_styles)),
+			esc_attr(Ultimate_Blocks\includes\generate_css_string($wrapper_spacing_styles)),
         );
-        return $block_content;
+
+		return $block_content;
     }
 }
 
