@@ -8,9 +8,9 @@ import {
 } from "./settings-options";
 import { h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon } from "./icons";
 import { SpacingControl } from "../components";
-import { getStyles } from "./get-styles";
+import { getSpacingCss } from "../utils/styling-helpers";
 import { getParentBlock } from "../../common";
-
+import { isNumber } from "lodash";
 import { __ } from "@wordpress/i18n";
 import {
 	InspectorControls,
@@ -50,6 +50,8 @@ const AdvancedHeadingEdit = ({
 		fontFamily,
 		fontWeight,
 		lineHeight,
+		padding,
+		margin,
 	} = attributes;
 
 	const { block, rootBlockClientId } = useSelect((select) => {
@@ -100,6 +102,8 @@ const AdvancedHeadingEdit = ({
 			setAttributes({ blockID: block.clientId });
 		}
 	}, [block?.clientId]);
+	const paddingObj = getSpacingCss(padding);
+	const marginObj = getSpacingCss(margin);
 
 	// Clean up the content from img and script tags.
 	useEffect(() => {
@@ -113,7 +117,25 @@ const AdvancedHeadingEdit = ({
 	}, []);
 
 	const headingIcons = [h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon];
-	const styles = getStyles(attributes);
+	const styles = {
+		paddingTop: paddingObj?.top,
+		paddingRight: paddingObj?.right,
+		paddingBottom: paddingObj?.bottom,
+		paddingLeft: paddingObj?.left,
+		marginTop: marginObj?.top,
+		marginRight: marginObj?.right,
+		marginBottom: marginObj?.bottom,
+		marginLeft: marginObj?.left,
+		textAlign: alignment,
+		color: textColor,
+		backgroundColor,
+		fontSize: fontSize ? `${fontSize}px` : null,
+		letterSpacing: isNumber(letterSpacing) ? `${letterSpacing}px` : "",
+		textTransform,
+		fontFamily: fontFamily.includes(" ") ? `'${fontFamily}'` : fontFamily,
+		fontWeight,
+		lineHeight: lineHeight ? `${lineHeight}px` : null,
+	};
 	return (
 		<div {...useBlockProps()}>
 			<InspectorControls group="settings">
