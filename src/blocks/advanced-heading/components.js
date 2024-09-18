@@ -8,7 +8,7 @@ import {
 } from "./settings-options";
 import { h1Icon, h2Icon, h3Icon, h4Icon, h5Icon, h6Icon } from "./icons";
 import { SpacingControl } from "../components";
-import { getSpacingCss } from "../utils/styling-helpers";
+import { generateStyles, getSpacingCss } from "../utils/styling-helpers";
 import { getParentBlock } from "../../common";
 import { isNumber } from "lodash";
 import { __ } from "@wordpress/i18n";
@@ -285,7 +285,7 @@ const AdvancedHeadingEdit = ({
 				value={content}
 				placeholder={__("Write heading...", "ultimate-blocks")}
 				onChange={(value) => setAttributes({ content: value })}
-				style={styles}
+				style={generateStyles(styles)}
 				identifier="content"
 				onSplit={(contentFragment) =>
 					contentFragment
