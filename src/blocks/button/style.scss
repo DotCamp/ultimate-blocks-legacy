@@ -16,6 +16,18 @@
 	a.ub-button-block-btn.ub-button-block-btn {
 		text-decoration: none;
 	}
+
+	a {
+		color: var(--ub-button-color);
+		background-color: var(--ub-button-background-color);
+		border: var(--ub-button-border);
+
+		&:hover {
+			color: var(--ub-button-hover-color);
+			background-color: var(--ub-button-hover-background-color);
+			border: var(--ub-button-hover-border);
+		}
+	}
 }
 
 .ub-button-full-container {
@@ -33,7 +45,6 @@
 	margin: 20px 0;
 	display: flex;
 	cursor: pointer;
-	gap: var(--ub-button-improved-block-spacing, 20px);
 	transition:
 		background-color 0.5s,
 		color 0.5s,
