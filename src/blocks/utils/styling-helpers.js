@@ -117,6 +117,7 @@ export function getBorderVariablesCss(border, slug) {
 
 	return borders;
 }
+
 export function generateStyles(styles) {
 	return omitBy(
 		styles,
@@ -127,4 +128,18 @@ export function generateStyles(styles) {
 			trim(value) === "" ||
 			trim(value) === "undefined undefined undefined",
 	);
+}
+
+export function getBackgroundColorVar(
+	attributes,
+	bgColorAttrKey,
+	gradientAttrKey,
+) {
+	if (!isEmpty(attributes[bgColorAttrKey])) {
+		return attributes[bgColorAttrKey];
+	} else if (!isEmpty(attributes[gradientAttrKey])) {
+		return attributes[gradientAttrKey];
+	} else {
+		return "";
+	}
 }

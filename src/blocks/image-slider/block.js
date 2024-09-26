@@ -9,7 +9,11 @@ import { useEffect, useState } from "react";
 import { getStyles } from "./get-styles";
 import { __ } from "@wordpress/i18n";
 import { registerBlockType } from "@wordpress/blocks";
-import { SpacingControl } from "../components";
+import {
+	ColorSettings,
+	ColorSettingsWithGradient,
+	SpacingControl,
+} from "../components";
 import {
 	MediaUpload,
 	MediaPlaceholder,
@@ -510,6 +514,25 @@ function ImageSliderMain(props) {
 								label={__("Margin", "ultimate-blocks")}
 							/>
 						</PanelBody>
+					</InspectorControls>
+					<InspectorControls group="color">
+						<ColorSettings
+							attrKey="navigationColor"
+							label={__("Navigation Color", "ultimate-blocks")}
+						/>
+						<ColorSettings
+							attrKey="paginationColor"
+							label={__("Inactive Pagination Color", "ultimate-blocks")}
+						/>
+						<ColorSettings
+							attrKey="activePaginationColor"
+							label={__("Active Pagination Color", "ultimate-blocks")}
+						/>
+						<ColorSettingsWithGradient
+							attrBackgroundKey="navigationBackgroundColor"
+							attrGradientKey="navigationGradientColor"
+							label={__("Navigation Background", "ultimate-blocks")}
+						/>
 					</InspectorControls>
 				</>
 			)}

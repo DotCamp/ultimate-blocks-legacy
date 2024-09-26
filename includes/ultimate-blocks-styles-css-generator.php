@@ -147,6 +147,7 @@ function get_border_variables_css( $border, $slug ) {
 
      return $borders;
 }
+
 function get_background_color_var(
 	$attributes,
 	$bg_color_attr_key,

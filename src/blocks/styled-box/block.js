@@ -182,10 +182,15 @@ function StyledBox(props) {
 			block.innerBlocks.length > 0 &&
 			block.innerBlocks[0].name !== "ub/styled-box-notification-content"
 		) {
-			replaceInnerBlocks(block.innerBlocks[0].clientId, [
-				createBlock("ub/styled-box-notification-content"),
+			replaceInnerBlocks(block.clientId, [
+				createBlock(
+					"ub/styled-box-notification-content",
+					{},
+					block.innerBlocks[0].innerBlocks,
+				),
 			]);
 		}
+
 		renderedBlock = (
 			<InnerBlocks
 				templateLock={"all"}
@@ -495,8 +500,12 @@ function StyledBox(props) {
 			block.innerBlocks.length > 0 &&
 			block.innerBlocks[0].name !== "ub/styled-box-bordered-content"
 		) {
-			replaceInnerBlocks(block.innerBlocks[0].clientId, [
-				createBlock("ub/styled-box-bordered-content"),
+			replaceInnerBlocks(block.clientId, [
+				createBlock(
+					"ub/styled-box-bordered-content",
+					{},
+					block.innerBlocks[0].innerBlocks,
+				),
 			]);
 		}
 		renderedBlock = (

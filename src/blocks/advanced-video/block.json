@@ -1,255 +1,255 @@
 {
-     "$schema": "https://schemas.wp.org/trunk/block.json",
-     "apiVersion": 3,
-     "name": "ub/advanced-video",
-     "title": "Advanced Video",
-     "category": "ultimateblocks",
-     "description": "Better way to add video content with essential customization options.",
-     "keywords": [
-          "advanced video",
-          "video",
-          "Ultimate Blocks"
-     ],
-     "attributes": {
-          "blockID": {
-               "type": "string",
-               "default": ""
-          },
-          "videoId": {
-               "type": "integer",
-               "default": -1
-          },
-          "url": {
-               "type": "string",
-               "default": ""
-          },
-          "videoSource": {
-               "type": "string",
-               "default": ""
-          },
-          "borderSize": {
-               "type": "number",
-               "default": 0
-          },
-          "borderStyle": {
-               "type": "string",
-               "default": ""
-          },
-          "borderColor": {
-               "type": "string",
-               "default": ""
-          },
-          "topBorderSize": {
-               "type": "number",
-               "default": 0
-          },
-          "rightBorderSize": {
-               "type": "number",
-               "default": 0
-          },
-          "bottomBorderSize": {
-               "type": "number",
-               "default": 0
-          },
-          "leftBorderSize": {
-               "type": "number",
-               "default": 0
-          },
-          "topBorderStyle": {
-               "type": "string",
-               "default": ""
-          },
-          "rightBorderStyle": {
-               "type": "string",
-               "default": ""
-          },
-          "bottomBorderStyle": {
-               "type": "string",
-               "default": ""
-          },
-          "leftBorderStyle": {
-               "type": "string",
-               "default": ""
-          },
-          "topBorderColor": {
-               "type": "string",
-               "default": ""
-          },
-          "rightBorderColor": {
-               "type": "string",
-               "default": ""
-          },
-          "bottomBorderColor": {
-               "type": "string",
-               "default": ""
-          },
-          "leftBorderColor": {
-               "type": "string",
-               "default": ""
-          },
-          "topLeftRadius": {
-               "type": "number",
-               "default": 0
-          },
-          "topRightRadius": {
-               "type": "number",
-               "default": 0
-          },
-          "bottomLeftRadius": {
-               "type": "number",
-               "default": 0
-          },
-          "bottomRightRadius": {
-               "type": "number",
-               "default": 0
-          },
-          "vimeoShowDetails": {
-               "type": "boolean",
-               "default": true
-          },
-          "vimeoUploaderNotBasic": {
-               "type": "boolean",
-               "default": false
-          },
-          "vimeoShowLogo": {
-               "type": "boolean",
-               "default": true
-          },
-          "enableYoutubeCookies": {
-               "type": "boolean",
-               "default": false
-          },
-          "autoplay": {
-               "type": "boolean",
-               "default": false
-          },
-          "loop": {
-               "type": "boolean",
-               "default": false
-          },
-          "mute": {
-               "type": "boolean",
-               "default": false
-          },
-          "showPlayerControls": {
-               "type": "boolean",
-               "default": true
-          },
-          "playInline": {
-               "type": "boolean",
-               "default": true
-          },
-          "thumbnail": {
-               "type": "string",
-               "default": ""
-          },
-          "thumbnailID": {
-               "type": "number",
-               "default": -1
-          },
-          "videoEmbedCode": {
-               "type": "string",
-               "default": ""
-          },
-          "startTime": {
-               "type": "number",
-               "default": 0
-          },
-          "videoLength": {
-               "type": "number",
-               "default": 0
-          },
-          "width": {
-               "type": "number",
-               "default": 100
-          },
-          "origWidth": {
-               "type": "number",
-               "default": 0
-          },
-          "preserveAspectRatio": {
-               "type": "boolean",
-               "default": false
-          },
-          "autofit": {
-               "type": "boolean",
-               "default": true
-          },
-          "height": {
-               "type": "number",
-               "default": 370
-          },
-          "origHeight": {
-               "type": "number",
-               "default": 0
-          },
-          "playerColor": {
-               "type": "string",
-               "default": ""
-          },
-          "showInDesktop": {
-               "type": "boolean",
-               "default": true
-          },
-          "showInTablet": {
-               "type": "boolean",
-               "default": true
-          },
-          "showInMobile": {
-               "type": "boolean",
-               "default": true
-          },
-          "shadow": {
-               "type": "array",
-               "default": [
-                    {
-                         "angle": 0,
-                         "radius": 0,
-                         "color": "#000000",
-                         "transparency": 0,
-                         "blur": 0,
-                         "spread": 0
-                    }
-               ]
-          },
-          "isTransformed": {
-               "type": "boolean",
-               "default": false
-          },
-          "channelId": {
-               "type": "string",
-               "default": ""
-          },
-          "padding": {
-               "type": "object",
-               "default": {}
-          },
-          "aspectRatio": {
-               "type": "string",
-               "default": ""
-          },
-          "margin": {
-               "type": "object",
-               "default": {}
-          },
-          "borderRadius": {
-               "type": "object",
-               "default": {}
-          },
-          "border": {
-               "type": "object",
-               "default": {}
-          },
-          "isBorderComponentChanged": {
-               "type": "boolean",
-               "default": false
-          },
-          "isResponsiveSettingsRemoved": {
-               "type": "boolean",
-               "default": false
-          }
-     },
-     "supports": {
-          "align": true
-     }
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ub/advanced-video",
+	"title": "Video (UB)",
+	"category": "ultimateblocks",
+	"description": "Better way to add video content with essential customization options.",
+	"keywords": [
+		"advanced video",
+		"video",
+		"Ultimate Blocks"
+	],
+	"attributes": {
+		"blockID": {
+			"type": "string",
+			"default": ""
+		},
+		"videoId": {
+			"type": "integer",
+			"default": -1
+		},
+		"url": {
+			"type": "string",
+			"default": ""
+		},
+		"videoSource": {
+			"type": "string",
+			"default": ""
+		},
+		"borderSize": {
+			"type": "number",
+			"default": 0
+		},
+		"borderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"borderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"topBorderSize": {
+			"type": "number",
+			"default": 0
+		},
+		"rightBorderSize": {
+			"type": "number",
+			"default": 0
+		},
+		"bottomBorderSize": {
+			"type": "number",
+			"default": 0
+		},
+		"leftBorderSize": {
+			"type": "number",
+			"default": 0
+		},
+		"topBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"rightBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"bottomBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"leftBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"topBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"rightBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"bottomBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"leftBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"topLeftRadius": {
+			"type": "number",
+			"default": 0
+		},
+		"topRightRadius": {
+			"type": "number",
+			"default": 0
+		},
+		"bottomLeftRadius": {
+			"type": "number",
+			"default": 0
+		},
+		"bottomRightRadius": {
+			"type": "number",
+			"default": 0
+		},
+		"vimeoShowDetails": {
+			"type": "boolean",
+			"default": true
+		},
+		"vimeoUploaderNotBasic": {
+			"type": "boolean",
+			"default": false
+		},
+		"vimeoShowLogo": {
+			"type": "boolean",
+			"default": true
+		},
+		"enableYoutubeCookies": {
+			"type": "boolean",
+			"default": false
+		},
+		"autoplay": {
+			"type": "boolean",
+			"default": false
+		},
+		"loop": {
+			"type": "boolean",
+			"default": false
+		},
+		"mute": {
+			"type": "boolean",
+			"default": false
+		},
+		"showPlayerControls": {
+			"type": "boolean",
+			"default": true
+		},
+		"playInline": {
+			"type": "boolean",
+			"default": true
+		},
+		"thumbnail": {
+			"type": "string",
+			"default": ""
+		},
+		"thumbnailID": {
+			"type": "number",
+			"default": -1
+		},
+		"videoEmbedCode": {
+			"type": "string",
+			"default": ""
+		},
+		"startTime": {
+			"type": "number",
+			"default": 0
+		},
+		"videoLength": {
+			"type": "number",
+			"default": 0
+		},
+		"width": {
+			"type": "number",
+			"default": 100
+		},
+		"origWidth": {
+			"type": "number",
+			"default": 0
+		},
+		"preserveAspectRatio": {
+			"type": "boolean",
+			"default": false
+		},
+		"autofit": {
+			"type": "boolean",
+			"default": true
+		},
+		"height": {
+			"type": "number",
+			"default": 370
+		},
+		"origHeight": {
+			"type": "number",
+			"default": 0
+		},
+		"playerColor": {
+			"type": "string",
+			"default": ""
+		},
+		"showInDesktop": {
+			"type": "boolean",
+			"default": true
+		},
+		"showInTablet": {
+			"type": "boolean",
+			"default": true
+		},
+		"showInMobile": {
+			"type": "boolean",
+			"default": true
+		},
+		"shadow": {
+			"type": "array",
+			"default": [
+				{
+					"angle": 0,
+					"radius": 0,
+					"color": "#000000",
+					"transparency": 0,
+					"blur": 0,
+					"spread": 0
+				}
+			]
+		},
+		"isTransformed": {
+			"type": "boolean",
+			"default": false
+		},
+		"channelId": {
+			"type": "string",
+			"default": ""
+		},
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"aspectRatio": {
+			"type": "string",
+			"default": ""
+		},
+		"margin": {
+			"type": "object",
+			"default": {}
+		},
+		"borderRadius": {
+			"type": "object",
+			"default": {}
+		},
+		"border": {
+			"type": "object",
+			"default": {}
+		},
+		"isBorderComponentChanged": {
+			"type": "boolean",
+			"default": false
+		},
+		"isResponsiveSettingsRemoved": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"align": true
+	}
 }

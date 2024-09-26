@@ -1,68 +1,72 @@
 {
-     "$schema": "https://schemas.wp.org/trunk/block.json",
-     "apiVersion": 3,
-     "name": "ub/divider",
-     "title": "Divider",
-     "category": "ultimateblocks",
-     "description": "Add custom divider between your blocks. Customize the color, size, everything.",
-     "keywords": [
-          "Divider",
-          "Separator",
-          "Ultimate Blocks"
-     ],
-     "attributes": {
-          "lineHeight": {
-               "type": "string",
-               "default": "300px"
-          },
-          "orientation": {
-               "type": "string",
-               "default": "horizontal"
-          },
-          "blockID": {
-               "type": "string",
-               "default": ""
-          },
-          "borderSize": {
-               "type": "number",
-               "default": 2
-          },
-          "borderStyle": {
-               "type": "string",
-               "default": "solid"
-          },
-          "borderColor": {
-               "type": "string",
-               "default": "#ccc"
-          },
-          "borderHeight": {
-               "type": "number",
-               "default": 2
-          },
-          "width": {
-               "type": "number",
-               "default": 100
-          },
-          "alignment": {
-               "type": "string",
-               "default": "center"
-          },
-          "padding": {
-               "type": "object",
-               "default": {}
-          },
-          "margin": {
-               "type": "object",
-               "default": {}
-          },
-          "dividerWidth": {
-               "type": "string",
-               "default": "100%"
-          },
-          "isWidthControlChanged": {
-               "type": "boolean",
-               "default": false
-          }
-     },
-     "supports": {}
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ub/divider",
+	"title": "Divider",
+	"category": "ultimateblocks",
+	"description": "Add custom divider between your blocks. Customize the color, size, everything.",
+	"keywords": [
+		"Divider",
+		"Separator",
+		"Ultimate Blocks"
+	],
+	"attributes": {
+		"lineHeight": {
+			"type": "string",
+			"default": "300px"
+		},
+		"orientation": {
+			"type": "string",
+			"default": "horizontal"
+		},
+		"blockID": {
+			"type": "string",
+			"default": ""
+		},
+		"borderSize": {
+			"type": "number",
+			"default": 2
+		},
+		"borderStyle": {
+			"type": "string",
+			"default": "solid"
+		},
+		"borderColor": {
+			"type": "string",
+			"default": "#ccc"
+		},
+		"borderHeight": {
+			"type": "number",
+			"default": 2
+		},
+		"width": {
+			"type": "number",
+			"default": 100
+		},
+		"alignment": {
+			"type": "string",
+			"default": "center"
+		},
+		"align": {
+			"type": "string",
+			"default": ""
+		},
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"margin": {
+			"type": "object",
+			"default": {}
+		},
+		"dividerWidth": {
+			"type": "string",
+			"default": "100%"
+		},
+		"isWidthControlChanged": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {}
 }

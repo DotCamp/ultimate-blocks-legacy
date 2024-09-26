@@ -1,5 +1,18 @@
 /*Block styles*/
 .ub_image_slider {
+	.swiper-pagination {
+		.swiper-pagination-bullet:not(.swiper-pagination-bullet-active) {
+			background: var(--swiper-inactive-pagination-color, #000000);
+		}
+	}
+	.swiper-button-prev {
+		padding: 30px;
+		background: var(--swiper-navigation-background-color);
+	}
+	.swiper-button-next {
+		background: var(--swiper-navigation-background-color);
+		padding: 30px;
+	}
 	.ub_image_slider_image_caption {
 		display: block;
 		text-align: center;
