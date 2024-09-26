@@ -7,7 +7,6 @@ import {
 	splitArray,
 	getParentBlock,
 } from "../../common";
-import { getStyles } from "./get-styles";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import SavedStylesInspector from "$Inc/components/SavedStyles/SavedStylesInspector";
@@ -49,7 +48,12 @@ import {
 	TabsPanelControl,
 } from "../components";
 import { AVAILABLE_JUSTIFICATIONS, AVAILABLE_ORIENTATION } from "../../common";
-import { splitBorderRadius } from "../utils/styling-helpers";
+import {
+	generateStyles,
+	getSpacingCss,
+	getSpacingPresetCssVar,
+	splitBorderRadius,
+} from "../utils/styling-helpers";
 import ColorSettings from "./components/ButtonColorSettings";
 
 export const allIcons = Object.assign(fas, fab);
@@ -905,6 +909,9 @@ export function EditorComponent(props) {
 			orientation,
 			isFlexWrap,
 			isBorderComponentChanged,
+			padding,
+			margin,
+			blockSpacing,
 		},
 	} = props;
 	const { block, rootBlockClientId } = useSelect((select) => {
@@ -1299,10 +1306,23 @@ export function EditorComponent(props) {
 		}
 	}, [isSelected]);
 	const flexWrapClass = isFlexWrap ? " ub-flex-wrap" : "";
-
+	const paddingObj = getSpacingCss(padding);
+	const marginObj = getSpacingCss(margin);
+	const blockSpacingValue = getSpacingPresetCssVar(blockSpacing?.all) ?? "20px";
+	const styles = {
+		paddingTop: paddingObj?.top,
+		paddingRight: paddingObj?.right,
+		paddingBottom: paddingObj?.bottom,
+		paddingLeft: paddingObj?.left,
+		marginTop: marginObj?.top,
+		marginRight: marginObj?.right,
+		marginBottom: marginObj?.bottom,
+		marginLeft: marginObj?.left,
+		gap: blockSpacingValue,
+	};
 	const blockProps = useBlockProps({
 		className: `ub-buttons align-button-${align} orientation-button-${orientation}${flexWrapClass}`,
-		style: getStyles(props.attributes),
+		style: generateStyles(styles),
 	});
 
 	return (
